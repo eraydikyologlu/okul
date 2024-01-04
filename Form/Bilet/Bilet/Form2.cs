@@ -17,19 +17,26 @@ namespace Bilet
     {
         NpgsqlConnection baglanti;
         private string eposta;
+        private int kullaniciId; // Yeni eklenen kullaniciId özelliği
 
         public string Eposta
         {
             get { return eposta; }
             private set { eposta = value; }
         }
+        public int KullaniciId // Yeni eklenen kullaniciId özelliği
+        {
+            get { return kullaniciId; }
+            private set { kullaniciId = value; }
+        }
         private GirisForm girisForm;
 
 
-        public FutbolForm(GirisForm girisForm)
+        public FutbolForm(GirisForm girisForm, int kullaniciId)
         {
             InitializeComponent();
             this.girisForm = girisForm;
+            this.KullaniciId = kullaniciId;
 
             baglanti = new NpgsqlConnection("Host=localhost;Port=5432;Database=passo;Username=postgres;Password=admin");
 
@@ -73,7 +80,7 @@ namespace Bilet
             }
 
 
-            
+
 
         }
 
@@ -141,360 +148,38 @@ namespace Bilet
 
 
 
+      
 
-
-        private void BtnBiletSatinAl_Click(object sender, EventArgs e)
-        {
-            
-            string eposta = girisForm.Eposta;
-            //MessageBox.Show("Eposta: " + eposta);
-            try
-            {
-                baglanti.Open();
-                object secilenOge = TribunIDcomboBox1.SelectedItem;
-
-                if (secilenOge is DataRowView)
-                {
-                    string secilenEtkinlik = ((DataRowView)secilenOge).Row["tribunid"].ToString();
-                    string biletsorgu = "";
-
-
-                    if (!string.IsNullOrEmpty(secilenEtkinlik))
-                    {
-                        int tribunid = int.Parse(TribunIDcomboBox1.Text);
-
-
-                        if (secilenEtkinlik == "1")
-                        {
-                            string connectionString = "Host=localhost;Port=5432;Database=passo;Username=postgres;Password=admin";
-                            
-
-                            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
-                            {
-
-                               connection.Open();
-
-                                // Kullanıcının giriş yaptığı e-posta
-                                
-                                 // Burada eposta değişkenini kullanın, eğer bu değişken farklı bir yerden geliyorsa
-
-                                for (int kullaniciid = 1; kullaniciid <= 10; kullaniciid++)
-                                {
-                                    // PostgreSQL sorgusu
-                                    string sorgu = "SELECT eposta FROM kullanicilar WHERE kullaniciid = @kullaniciid";
-                                                                            
-
-                                    using (NpgsqlCommand command = new NpgsqlCommand(sorgu, connection))
-                                    {
-                                        command.CommandText = sorgu;
-
-                                        command.Parameters.AddWithValue("@kullaniciid", kullaniciid);
-                                        command.ExecuteNonQuery();
-
-                                        using (NpgsqlDataReader reader = command.ExecuteReader())
-                                        {
-                                            if (reader.Read()) // Eğer veri varsa
-                                            {
-                                                string veritabaniEposta = reader["eposta"].ToString();
-
-                                                // E-postaları karşılaştır
-                                                if (eposta.Equals(veritabaniEposta, StringComparison.OrdinalIgnoreCase))
-                                                {
-                                                    MessageBox.Show("Giriş başarılı Kullanici id ve eposta: " + kullaniciid + eposta, "bilgi");
-
-
-
-
-                                                    // Eğer e-postalar eşitse, istediğiniz işlemleri gerçekleştirebilirsiniz.
-                                                    // Örneğin, bu e-posta değişkenini kullanabilirsiniz:
-                                                    // string kullanilanEposta = girisEposta;
-                                                }
-                                                else
-                                                {
-                                                    Console.WriteLine($"Kullanıcı ID {kullaniciid} ile giriş başarısız!");
-                                                }
-                                            }
-                                            else
-                                            {
-                                                Console.WriteLine($"Kullanıcı ID {kullaniciid} bulunamadı.");
-                                            }
-                                            
-
-                                        }
-
-                                    }
-                                        
-                                }
-                                connection.Close();
-                            }
-
-
-                            // Kullanıcıya bilgi verir.
-
-
-                            label1.Text = "Seçilen Tribün: Doğu Tribün Üst";
-                            label3.Text = "Bilet fiyatı = 1100TL";
-
-
-                        }
-                        else if (secilenEtkinlik == "2")
-                        {
-                            biletsorgu = "UPDATE kullanicilar SET tribunid = @tribunid, tribun_ad = 'Doğu tribün alt'";
-                            NpgsqlCommand kmt = new NpgsqlCommand(biletsorgu, baglanti);
-                            
-                            // Parametreleri ayarlar.
-                            kmt.Parameters.AddWithValue("@tribunid", tribunid);
-
-
-
-                            // Sorguyu çalıştırır.
-                            try
-                            {
-                                kmt.ExecuteNonQuery();
-                            }
-                            catch (Exception ex)
-                            {
-                                // Hata mesajını yakalar.
-                                MessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-
-                            MessageBox.Show("Kullanıcı bilet kaydı başarılı bir şekilde gerçekleşti.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            baglanti.Close();
-
-
-
-
-
-
-
-
-
-                            label1.Text = "Seçilen Tribün: Doğu Tribünü alt";
-                            label3.Text = "Bilet fiyatı = 1250TL";
-                        }
-                        else if (secilenEtkinlik == "3")
-                        {
-                            biletsorgu = "UPDATE kullanicilar SET tribunid = @tribunid, tribun_ad = 'Batı tribün üst'";
-                            NpgsqlCommand kmt = new NpgsqlCommand(biletsorgu, baglanti);
-                            //String eposta = this.Eposta;
-                            // Parametreleri ayarlar.
-                            kmt.Parameters.AddWithValue("@tribunid", tribunid);
-
-
-
-                            // Sorguyu çalıştırır.
-                            try
-                            {
-                                kmt.ExecuteNonQuery();
-                            }
-                            catch (Exception ex)
-                            {
-                                // Hata mesajını yakalar.
-                                MessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-
-                            MessageBox.Show("Kullanıcı bilet kaydı başarılı bir şekilde gerçekleşti.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            baglanti.Close();
-                            label1.Text = "Seçilen Tribün: Batı Tribünü üst";
-                            label3.Text = "Bilet fiyatı = 750TL";
-                        }
-                        else if (secilenEtkinlik == "4")
-                        {
-                            
-
-
-                            // Sorguyu çalıştırır.
-                            try
-                            {
-                               // kmt.ExecuteNonQuery();
-                            }
-                            catch (Exception ex)
-                            {
-                                // Hata mesajını yakalar.
-                                MessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-
-                            MessageBox.Show("Kullanıcı bilet kaydı başarılı bir şekilde gerçekleşti.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            baglanti.Close();
-
-                            label1.Text = "Seçilen Tribün: Batı Tribünü alt";
-                            label3.Text = "Bilet fiyatı = 600";
-                        }
-                        else if (secilenEtkinlik == "5")
-                        {
-                            biletsorgu = "UPDATE kullanicilar SET tribunid = @tribunid, tribun_ad = 'Kuzey tribün üst'";
-
-                            NpgsqlCommand kmt = new NpgsqlCommand(biletsorgu, baglanti);
-
-                            // Parametreleri ayarlar.
-                            kmt.Parameters.AddWithValue("@tribunid", tribunid);
-
-
-
-                            // Sorguyu çalıştırır.
-                            try
-                            {
-                                kmt.ExecuteNonQuery();
-                            }
-                            catch (Exception ex)
-                            {
-                                // Hata mesajını yakalar.
-                                MessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-
-                            MessageBox.Show("Kullanıcı bilet kaydı başarılı bir şekilde gerçekleşti.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            baglanti.Close();
-
-                            label1.Text = "Seçilen Tribün: Kuzey Tribün üst";
-                            label3.Text = "Bilet fiyatı = 800";
-                        }
-                        else if (secilenEtkinlik == "6")
-                        {
-                            biletsorgu = "UPDATE kullanicilar SET tribunid = @tribunid, tribun_ad = 'Kuzey tribün alt'";
-                            NpgsqlCommand kmt = new NpgsqlCommand(biletsorgu, baglanti);
-
-                            // Parametreleri ayarlar.
-                            kmt.Parameters.AddWithValue("@tribunid", tribunid);
-
-
-
-                            // Sorguyu çalıştırır.
-                            try
-                            {
-                                kmt.ExecuteNonQuery();
-                            }
-                            catch (Exception ex)
-                            {
-                                // Hata mesajını yakalar.
-                                MessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-
-                            MessageBox.Show("Kullanıcı bilet kaydı başarılı bir şekilde gerçekleşti.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            baglanti.Close();
-
-                            label1.Text = "Seçilen Tribün: Kuzey Tribünü alt";
-                            label3.Text = "Bilet fiyatı = 600";
-                        }
-                        else if (secilenEtkinlik == "7")
-                        {
-                            biletsorgu = "UPDATE kullanicilar SET tribunid = @tribunid, tribun_ad = 'Güney tribün üst'";
-                            NpgsqlCommand kmt = new NpgsqlCommand(biletsorgu, baglanti);
-
-                            // Parametreleri ayarlar.
-                            kmt.Parameters.AddWithValue("@tribunid", tribunid);
-
-
-
-                            // Sorguyu çalıştırır.
-                            try
-                            {
-                                kmt.ExecuteNonQuery();
-                            }
-                            catch (Exception ex)
-                            {
-                                // Hata mesajını yakalar.
-                                MessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-
-                            MessageBox.Show("Kullanıcı bilet kaydı başarılı bir şekilde gerçekleşti.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            baglanti.Close();
-
-                            label1.Text = "Seçilen Tribün: Güney Tribünü üst";
-                            label3.Text = "Bilet fiyatı = 600";
-                        }
-                        else if (secilenEtkinlik == "8")
-                        {
-                            biletsorgu = "UPDATE kullanicilar SET tribunid = @tribunid, tribun_ad = 'Güney tribün alt'";
-                            NpgsqlCommand kmt = new NpgsqlCommand(biletsorgu, baglanti);
-
-                            // Parametreleri ayarlar.
-                            kmt.Parameters.AddWithValue("@tribunid", tribunid);
-
-
-
-                            // Sorguyu çalıştırır.
-                            try
-                            {
-                                kmt.ExecuteNonQuery();
-                            }
-                            catch (Exception ex)
-                            {
-                                // Hata mesajını yakalar.
-                                MessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-
-                            MessageBox.Show("Kullanıcı bilet kaydı başarılı bir şekilde gerçekleşti.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            baglanti.Close();
-
-                            label1.Text = "Seçilen Tribün: Güney Tribünü alt";
-                            label3.Text = "Bilet fiyatı = 600";
-                        }
-                        else if (secilenEtkinlik == "9")
-                        {
-                            biletsorgu = "UPDATE kullanicilar SET tribunid = @tribunid, tribun_ad = 'Misafir tribün'";
-                            NpgsqlCommand kmt = new NpgsqlCommand(biletsorgu, baglanti);
-
-                            // Parametreleri ayarlar.
-                            kmt.Parameters.AddWithValue("@tribunid", tribunid);
-
-
-
-                            // Sorguyu çalıştırır.
-                            try
-                            {
-                                kmt.ExecuteNonQuery();
-                            }
-                            catch (Exception ex)
-                            {
-                                // Hata mesajını yakalar.
-                                MessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-
-                            MessageBox.Show("Kullanıcı bilet kaydı başarılı bir şekilde gerçekleşti.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            baglanti.Close();
-
-                            label1.Text = "Seçilen Tribün: Misafir Tribünü";
-                            label3.Text = "Bilet fiyatı = 600";
-                        }
-                        NpgsqlDataAdapter dada = new NpgsqlDataAdapter(biletsorgu, baglanti);
-                        DataSet dsds = new DataSet();
-                        dada.Fill(dsds);
-
-                        if (dsds.Tables.Count > 0)
-                        {
-                            dataGridView1.DataSource = dsds.Tables[0];
-                        }
-
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Hata: " + ex.Message);
-            }
-            finally
-            {
-                baglanti.Close();
-            }
-            
-
-        }
 
         private void BtnBilgileriGöster_Click(object sender, EventArgs e)
         {
             int tribunid = int.Parse(TribunIDcomboBox1.Text);
             baglanti.Open();
-            NpgsqlCommand comut = new NpgsqlCommand("SELECT eposta FROM kullanicilar WHERE eposta = @eposta",baglanti);
-            comut.Parameters.AddWithValue("@eposta", Eposta);
-            String ePosta = girisForm.Eposta;
-            Bilgiler.Text = "E-posta: " + ePosta;
-            bilgiler2.Text = "Tribün ID: " + tribunid;
 
-            comut.ExecuteNonQuery();
+            // Kullanıcının belirli tribündeki bilet bilgilerini sorgula
+            NpgsqlCommand comut = new NpgsqlCommand("SELECT * FROM biletalanlar WHERE kullaniciid = @kullaniciid", baglanti);
+            comut.Parameters.AddWithValue("@kullaniciid", kullaniciId);
+
+            NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(comut);
+            DataTable dataTable = new DataTable();
+            adapter.Fill(dataTable);
+
+            if (dataTable.Rows.Count > 0)
+            {
+                // Bilet bilgilerini göster
+                dataGridView1.DataSource = dataTable; // DataGridView kullanarak tablo şeklinde gösterme
+            }
+            else
+            {
+                // Kullanıcının belirtilen tribünde bilet bulunamadığı için hata mesajı göster
+                MessageBox.Show("Kullanıcının belirtilen tribünde bilet bulunamadığı için bilgiler gösterilemedi.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
             baglanti.Close();
-            
         }
-        
+
+
+
         private void label5_Click(object sender, EventArgs e)
         {
 
@@ -511,13 +196,130 @@ namespace Bilet
             {
                 dataGridView1.DataSource = ds.Tables[0];
             }
-            
+
 
         }
 
         private void macIDcomboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void BiletSilBtn_Click(object sender, EventArgs e)
+        {
+            baglanti.Open();
+
+            int tribunid = int.Parse(TribunIDcomboBox1.Text);
+
+            // Kullanıcının belirli tribundaki bileti var mı kontrol et
+            NpgsqlCommand kontrolKomut = new NpgsqlCommand("SELECT COUNT(*) FROM biletalanlar WHERE kullaniciid = @kullaniciID AND tribunid = @tribunid", baglanti);
+            kontrolKomut.Parameters.AddWithValue("@kullaniciID", kullaniciId);
+            kontrolKomut.Parameters.AddWithValue("@tribunid", tribunid);
+
+            int biletSayisi = Convert.ToInt32(kontrolKomut.ExecuteScalar());
+
+            if (biletSayisi > 0)
+            {
+                // Bilet varsa silme işlemi gerçekleştir
+                NpgsqlCommand silKomut = new NpgsqlCommand("DELETE FROM biletalanlar WHERE kullaniciid = @kullaniciID AND tribunid = @tribunid", baglanti);
+                silKomut.Parameters.AddWithValue("@kullaniciID", kullaniciId);
+                silKomut.Parameters.AddWithValue("@tribunid", tribunid);
+                silKomut.ExecuteNonQuery();
+                MessageBox.Show("Bilet silme işlemi başarılı bir şekilde gerçekleşti.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                // Bilet yoksa hata mesajı göster
+                MessageBox.Show("Kullanıcının belirtilen tribünde bilet bulunamadığı için silme işlemi gerçekleştirilemedi.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            baglanti.Close();
+        }
+
+        private void BiletGuncelleBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BiletSatınAl_Click(object sender, EventArgs e)
+        {
+            
+                string eposta = girisForm.Eposta;
+                try
+                {
+                    baglanti.Open();
+                    object secilenOge = TribunIDcomboBox1.SelectedItem;
+
+                    if (secilenOge is DataRowView)
+                    {
+                        string secilenEtkinlik = ((DataRowView)secilenOge).Row["tribunid"].ToString();
+                        string biletsorgu = "";
+
+                        if (!string.IsNullOrEmpty(secilenEtkinlik))
+                        {
+                            int tribunid = int.Parse(TribunIDcomboBox1.Text);
+                            int biletsayisi = int.Parse(BiletSayisitextBox1.Text);
+
+                            if (secilenEtkinlik == "1" || secilenEtkinlik == "2" || secilenEtkinlik == "3" || secilenEtkinlik == "4" || secilenEtkinlik == "5" || secilenEtkinlik == "6" || secilenEtkinlik == "7" || secilenEtkinlik == "8" || secilenEtkinlik == "9")
+                            {
+                                // Kullanıcının belirlediği tribünden daha önce aldığı bilet sayısını kontrol et
+                                string kontrolSorgu = "SELECT biletsayisi FROM biletalanlar WHERE kullaniciid = @kullaniciid AND tribunid = @tribunid";
+                                using (NpgsqlCommand kontrolCommand = new NpgsqlCommand(kontrolSorgu, baglanti))
+                                {
+                                    kontrolCommand.Parameters.AddWithValue("@kullaniciid", kullaniciId);
+                                    kontrolCommand.Parameters.AddWithValue("@tribunid", tribunid);
+
+                                    int alinanBiletSayisi = Convert.ToInt32(kontrolCommand.ExecuteScalar());
+
+                                    // Toplam bilet sayısını kontrol et
+                                    if (alinanBiletSayisi + biletsayisi > 3)
+                                    {
+                                        MessageBox.Show("Toplam bilet sayısı 3'ten fazla olamaz!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        return;
+                                    }
+
+                                    // Eğer aynı kombinasyon ile kayıt varsa, güncelleme yap
+                                    if (alinanBiletSayisi > 0)
+                                    {
+                                        string guncelleSorgu = "UPDATE biletalanlar SET biletsayisi = biletsayisi + @biletsayisi WHERE kullaniciid = @kullaniciid AND tribunid = @tribunid";
+                                        using (NpgsqlCommand guncelleCommand = new NpgsqlCommand(guncelleSorgu, baglanti))
+                                        {
+                                            guncelleCommand.Parameters.AddWithValue("@kullaniciid", kullaniciId);
+                                            guncelleCommand.Parameters.AddWithValue("@tribunid", tribunid);
+                                            guncelleCommand.Parameters.AddWithValue("@biletsayisi", biletsayisi);
+                                            guncelleCommand.ExecuteNonQuery();
+                                        }
+
+                                        MessageBox.Show("Bilet sayısı güncellendi!");
+                                        return;
+                                    }
+                                }
+
+                                // Eğer aynı kombinasyon ile kayıt yoksa, yeni bir kayıt ekle
+                                string ekleSorgu = "INSERT INTO biletalanlar (kullaniciid, eposta, tribunid, tribun_ad, biletsayisi) VALUES (@kullaniciid, @eposta, @tribunID,'Doğu tribun üst', @biletsayisi)";
+                                using (NpgsqlCommand kmt = new NpgsqlCommand(ekleSorgu, baglanti))
+                                {
+                                    kmt.Parameters.AddWithValue("@kullaniciid", kullaniciId);
+                                    kmt.Parameters.AddWithValue("@eposta", eposta);
+                                    kmt.Parameters.AddWithValue("@tribunid", tribunid);
+                                    kmt.Parameters.AddWithValue("@biletsayisi", biletsayisi);
+                                    kmt.ExecuteNonQuery();
+                                }
+
+                                MessageBox.Show("Bilet satın alındı!");
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Hata: " + ex.Message);
+                }
+                finally
+                {
+                    baglanti.Close();
+                }
+           
         }
     }
 }

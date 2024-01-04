@@ -30,15 +30,15 @@ namespace Bilet
             Eposta = ePostaTextBox1.Text;
             string sifre = SifretextBox2.Text;
 
-            
 
 
 
-            if (GirisYap(Eposta, sifre))
+
+            if (GirisYap(Eposta, sifre, out int kullaniciId))
             {
                 MessageBox.Show("Giriş başarılı!");
                 this.Hide();
-                FutbolForm futbolForm = new FutbolForm(this);
+                FutbolForm futbolForm = new FutbolForm(this, kullaniciId);
                 futbolForm.ShowDialog();
             }
             else
@@ -46,8 +46,10 @@ namespace Bilet
                 MessageBox.Show("Giriş başarısız. E-posta veya şifrenizi kontrol edin.");
             }
         }
-        private bool GirisYap(String Eposta, string sifre)
+        private bool GirisYap(String Eposta, string sifre, out int kullaniciId)
         {
+            kullaniciId = -1; // Default değer atanıyor.
+
             string connectionString = "Host=localhost;Username=postgres;Password=admin;Database=passo";
             using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
             {
@@ -61,9 +63,30 @@ namespace Bilet
 
                     int kullaniciSayisi = Convert.ToInt32(command.ExecuteScalar());
 
-                    return kullaniciSayisi > 0;
+                    if (kullaniciSayisi > 0)
+                    {
+                        // Kullanıcı doğrulandı, kullanıcı ID'sini alabilirsiniz.
+                        string query2 = "SELECT kullaniciid FROM kullanicilar WHERE Eposta = @Eposta";
+                        using (NpgsqlCommand command2 = new NpgsqlCommand(query2, connection))
+                        {
+                            command2.Parameters.AddWithValue("@Eposta", Eposta);
+
+                            // ExecuteScalar kullanarak kullanıcı ID'sini al
+                            object result = command2.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                kullaniciId = Convert.ToInt32(result);
+                                return true;
+                            }
+                        }
+                    }
                 }
+
+                return false;
             }
+
+
         }
 
         private void SifretextBox2_TextChanged(object sender, EventArgs e)

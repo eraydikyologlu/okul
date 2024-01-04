@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.BtnBiletSatinAl = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.BtnMacListele = new System.Windows.Forms.Button();
             this.TribunIDcomboBox1 = new System.Windows.Forms.ComboBox();
@@ -43,6 +42,11 @@
             this.button1 = new System.Windows.Forms.Button();
             this.macIDcomboBox1 = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.BiletSilBtn = new System.Windows.Forms.Button();
+            this.BiletGuncelleBtn = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.BiletSayisitextBox1 = new System.Windows.Forms.TextBox();
+            this.BiletSatınAl = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -55,17 +59,6 @@
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(822, 406);
             this.dataGridView1.TabIndex = 0;
-            // 
-            // BtnBiletSatinAl
-            // 
-            this.BtnBiletSatinAl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.BtnBiletSatinAl.Location = new System.Drawing.Point(859, 299);
-            this.BtnBiletSatinAl.Name = "BtnBiletSatinAl";
-            this.BtnBiletSatinAl.Size = new System.Drawing.Size(215, 73);
-            this.BtnBiletSatinAl.TabIndex = 1;
-            this.BtnBiletSatinAl.Text = "Bilet Satın Al";
-            this.BtnBiletSatinAl.UseVisualStyleBackColor = true;
-            this.BtnBiletSatinAl.Click += new System.EventHandler(this.BtnBiletSatinAl_Click);
             // 
             // label2
             // 
@@ -192,11 +185,66 @@
             this.label5.TabIndex = 20;
             this.label5.Text = "Maç seç (ID)";
             // 
+            // BiletSilBtn
+            // 
+            this.BiletSilBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.BiletSilBtn.Location = new System.Drawing.Point(859, 378);
+            this.BiletSilBtn.Name = "BiletSilBtn";
+            this.BiletSilBtn.Size = new System.Drawing.Size(212, 64);
+            this.BiletSilBtn.TabIndex = 21;
+            this.BiletSilBtn.Text = "Bileti Sil";
+            this.BiletSilBtn.UseVisualStyleBackColor = true;
+            this.BiletSilBtn.Click += new System.EventHandler(this.BiletSilBtn_Click);
+            // 
+            // BiletGuncelleBtn
+            // 
+            this.BiletGuncelleBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.BiletGuncelleBtn.Location = new System.Drawing.Point(1131, 378);
+            this.BiletGuncelleBtn.Name = "BiletGuncelleBtn";
+            this.BiletGuncelleBtn.Size = new System.Drawing.Size(215, 64);
+            this.BiletGuncelleBtn.TabIndex = 22;
+            this.BiletGuncelleBtn.Text = "Bilet güncelle";
+            this.BiletGuncelleBtn.UseVisualStyleBackColor = true;
+            this.BiletGuncelleBtn.Click += new System.EventHandler(this.BiletGuncelleBtn_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label6.Location = new System.Drawing.Point(835, 128);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(103, 25);
+            this.label6.TabIndex = 24;
+            this.label6.Text = "Bilet sayısı";
+            // 
+            // BiletSayisitextBox1
+            // 
+            this.BiletSayisitextBox1.Location = new System.Drawing.Point(965, 132);
+            this.BiletSayisitextBox1.Name = "BiletSayisitextBox1";
+            this.BiletSayisitextBox1.Size = new System.Drawing.Size(100, 22);
+            this.BiletSayisitextBox1.TabIndex = 25;
+            // 
+            // BiletSatınAl
+            // 
+            this.BiletSatınAl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.BiletSatınAl.Location = new System.Drawing.Point(862, 299);
+            this.BiletSatınAl.Name = "BiletSatınAl";
+            this.BiletSatınAl.Size = new System.Drawing.Size(209, 62);
+            this.BiletSatınAl.TabIndex = 26;
+            this.BiletSatınAl.Text = "Bilet Satın Al";
+            this.BiletSatınAl.UseVisualStyleBackColor = true;
+            this.BiletSatınAl.Click += new System.EventHandler(this.BiletSatınAl_Click);
+            // 
             // FutbolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1434, 549);
+            this.Controls.Add(this.BiletSatınAl);
+            this.Controls.Add(this.BiletSayisitextBox1);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.BiletGuncelleBtn);
+            this.Controls.Add(this.BiletSilBtn);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.macIDcomboBox1);
             this.Controls.Add(this.button1);
@@ -210,7 +258,6 @@
             this.Controls.Add(this.TribunIDcomboBox1);
             this.Controls.Add(this.BtnMacListele);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.BtnBiletSatinAl);
             this.Controls.Add(this.dataGridView1);
             this.DoubleBuffered = true;
             this.Name = "FutbolForm";
@@ -225,7 +272,6 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button BtnBiletSatinAl;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button BtnMacListele;
         private System.Windows.Forms.ComboBox TribunIDcomboBox1;
@@ -239,5 +285,10 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox macIDcomboBox1;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button BiletSilBtn;
+        private System.Windows.Forms.Button BiletGuncelleBtn;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox BiletSayisitextBox1;
+        private System.Windows.Forms.Button BiletSatınAl;
     }
 }
