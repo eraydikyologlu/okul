@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
             this.BtnMacListele = new System.Windows.Forms.Button();
@@ -46,12 +45,12 @@
             this.label6 = new System.Windows.Forms.Label();
             this.BiletSayisitextBox1 = new System.Windows.Forms.TextBox();
             this.BiletSatınAl = new System.Windows.Forms.Button();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.textBox1Arama = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.DerbiGosterBtn = new System.Windows.Forms.Button();
+            this.labelSecilenTakim = new System.Windows.Forms.Label();
+            this.labelTakimIsmi = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -247,11 +246,31 @@
             this.DerbiGosterBtn.UseVisualStyleBackColor = true;
             this.DerbiGosterBtn.Click += new System.EventHandler(this.DerbiGosterBtn_Click);
             // 
+            // labelSecilenTakim
+            // 
+            this.labelSecilenTakim.AutoSize = true;
+            this.labelSecilenTakim.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.labelSecilenTakim.Location = new System.Drawing.Point(111, 437);
+            this.labelSecilenTakim.Name = "labelSecilenTakim";
+            this.labelSecilenTakim.Size = new System.Drawing.Size(0, 39);
+            this.labelSecilenTakim.TabIndex = 31;
+            // 
+            // labelTakimIsmi
+            // 
+            this.labelTakimIsmi.AutoSize = true;
+            this.labelTakimIsmi.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.labelTakimIsmi.Location = new System.Drawing.Point(395, 437);
+            this.labelTakimIsmi.Name = "labelTakimIsmi";
+            this.labelTakimIsmi.Size = new System.Drawing.Size(0, 39);
+            this.labelTakimIsmi.TabIndex = 32;
+            // 
             // FutbolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1434, 549);
+            this.Controls.Add(this.labelTakimIsmi);
+            this.Controls.Add(this.labelSecilenTakim);
             this.Controls.Add(this.DerbiGosterBtn);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1Arama);
@@ -277,7 +296,6 @@
             this.Text = "Futbol";
             this.Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -302,9 +320,10 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox BiletSayisitextBox1;
         private System.Windows.Forms.Button BiletSatınAl;
-        private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.TextBox textBox1Arama;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button DerbiGosterBtn;
+        private System.Windows.Forms.Label labelSecilenTakim;
+        private System.Windows.Forms.Label labelTakimIsmi;
     }
 }

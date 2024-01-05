@@ -99,7 +99,6 @@ namespace Bilet
 
         private void BtnTribunListele_Click(object sender, EventArgs e)
         {
-
             object secilenOge = macIDcomboBox1.SelectedItem;
 
             // Eğer seçilen öğe bir DataRowView öğesi ise, metnini bir string değişkenine dönüştürün
@@ -109,211 +108,104 @@ namespace Bilet
 
                 if (!string.IsNullOrEmpty(secilenTribun))
                 {
-                    // Seçilen etkinlik tipine göre uygun formu açın
-                    switch (secilenTribun)
+                    Dictionary<string, string> sorgular = new Dictionary<string, string>
+            {
+                { "1", "select * from beşiktaştribunnormal" },
+                { "2", "select * from fenerbahçetribunnormal" },
+                { "3", "select * from gstribunnormal" },
+                { "4", "select * from samsunspor" },
+                { "5", "select * from adanademirspor" },
+                { "6", "select * from adanaspor" },
+                { "7", "SELECT * FROM altay" },
+                { "8", "SELECT * FROM bandırmaspor" },
+                { "9", "SELECT * FROM boluspor" },
+                { "10", "SELECT * FROM corumfk" },
+                { "11", "SELECT * FROM beşiktaştribunderbi" },
+                { "12", "SELECT * FROM kayserispor" },
+                { "13", "SELECT * FROM ankaragücü" },
+                { "14", "SELECT * FROM genclerbirligi" },
+                { "15", "SELECT * FROM kocaelispor" },
+                { "16", "SELECT * FROM gstribunderbi" },
+                { "17", "SELECT * FROM sivasspor" },
+                { "18", "SELECT * FROM fenerbahçetribunderbi" },
+                { "19", "SELECT * FROM giresunspor" },
+                { "20", "SELECT * FROM göztepe" },
+                { "21", "SELECT * FROM keciören" },
+                { "22", "SELECT * FROM manisa" },
+                { "23", "SELECT * FROM sakaryaspor" },
+                { "24", "SELECT * FROM gstribunnormal" },
+            };
+
+                    if (sorgular.TryGetValue(secilenTribun, out string sorgu))
                     {
-                        case "1":
-                            string sorgu = "select * from beşiktaştribunnormal";
-                            NpgsqlDataAdapter da1 = new NpgsqlDataAdapter(sorgu, baglanti);
-                            DataSet ds1 = new DataSet();
-                            da1.Fill(ds1);
-                            dataGridView1.DataSource = ds1.Tables[0];
-                            break;
-                        case "2":
-                            string sorgu2 = "select * from fenerbahçetribunnormal";
-                            NpgsqlDataAdapter da2 = new NpgsqlDataAdapter(sorgu2, baglanti);
-                            DataSet ds2 = new DataSet();
-                            da2.Fill(ds2);
-                            dataGridView1.DataSource = ds2.Tables[0];
-                            break;
-                        case "3":
-                            string sorgu3 = "select * from gstribunnormal";
-                            NpgsqlDataAdapter da3 = new NpgsqlDataAdapter(sorgu3, baglanti);
-                            DataSet ds3 = new DataSet();
-                            da3.Fill(ds3);
-                            dataGridView1.DataSource = ds3.Tables[0];
-                            break;
-                        case "4":
-                            string sorgu4 = "select * from samsunspor";
-                            NpgsqlDataAdapter da4 = new NpgsqlDataAdapter(sorgu4, baglanti);
-                            DataSet ds4 = new DataSet();
-                            da4.Fill(ds4);
-                            dataGridView1.DataSource = ds4.Tables[0];
-                            break;
-                        case "5":
-                            string sorgu5 = "select * from adanademirspor";
-                            NpgsqlDataAdapter da5 = new NpgsqlDataAdapter(sorgu5, baglanti);
-                            DataSet ds5 = new DataSet();
-                            da5.Fill(ds5);
-                            dataGridView1.DataSource = ds5.Tables[0];
-                            break;
-                        case "6":
-                            string sorgu6 = "select * from adanaspor";
-                            NpgsqlDataAdapter da6 = new NpgsqlDataAdapter(sorgu6, baglanti);
-                            DataSet ds6 = new DataSet();
-                            da6.Fill(ds6);
-                            dataGridView1.DataSource = ds6.Tables[0];
-                            break;
-                        case "7":
-                            string sorgu7 = "SELECT * FROM altay"; // sorgu5'yi sorgu7 olarak değiştirildi
-                            NpgsqlDataAdapter da7 = new NpgsqlDataAdapter(sorgu7, baglanti); // da5'i da7 olarak değiştirildi
-                            DataSet ds7 = new DataSet();
-                            da7.Fill(ds7);
-                            dataGridView1.DataSource = ds7.Tables[0];
-                            break;
-
-                        case "8":
-                            string sorgu8 = "SELECT * FROM bandırmaspor";
-                            NpgsqlDataAdapter da8 = new NpgsqlDataAdapter(sorgu8, baglanti);
-                            DataSet ds8 = new DataSet();
-                            da8.Fill(ds8);
-                            dataGridView1.DataSource = ds8.Tables[0];
-                            break;
-
-                        case "9":
-                            string sorgu9 = "SELECT * FROM boluspor";
-                            NpgsqlDataAdapter da9 = new NpgsqlDataAdapter(sorgu9, baglanti);
-                            DataSet ds9 = new DataSet();
-                            da9.Fill(ds9);
-                            dataGridView1.DataSource = ds9.Tables[0];
-                            break;
-
-                        case "10":
-                            string sorgu10 = "SELECT * FROM corumfk";
-                            NpgsqlDataAdapter da10 = new NpgsqlDataAdapter(sorgu10, baglanti);
-                            DataSet ds10 = new DataSet();
-                            da10.Fill(ds10);
-                            dataGridView1.DataSource = ds10.Tables[0];
-                            break;
-
-                        case "11":
-                            string sorgu11 = "SELECT * FROM besiktastribunderbi";
-                            NpgsqlDataAdapter da11 = new NpgsqlDataAdapter(sorgu11, baglanti);
-                            DataSet ds11 = new DataSet();
-                            da11.Fill(ds11);
-                            dataGridView1.DataSource = ds11.Tables[0];
-                            break;
-
-                        case "12":
-                            string sorgu12 = "SELECT * FROM kayserispor";
-                            NpgsqlDataAdapter da12 = new NpgsqlDataAdapter(sorgu12, baglanti);
-                            DataSet ds12 = new DataSet();
-                            da12.Fill(ds12);
-                            dataGridView1.DataSource = ds12.Tables[0];
-                            break;
-
-                        case "13":
-                            string sorgu13 = "SELECT * FROM ankaragücü";
-                            NpgsqlDataAdapter da13 = new NpgsqlDataAdapter(sorgu13, baglanti);
-                            DataSet ds13 = new DataSet();
-                            da13.Fill(ds13);
-                            dataGridView1.DataSource = ds13.Tables[0];
-                            break;
-
-                        case "14":
-                            string sorgu14 = "SELECT * FROM genclerbirligi";
-                            NpgsqlDataAdapter da14 = new NpgsqlDataAdapter(sorgu14, baglanti);
-                            DataSet ds14 = new DataSet();
-                            da14.Fill(ds14);
-                            dataGridView1.DataSource = ds14.Tables[0];
-                            break;
-
-                        case "15":
-                            string sorgu15 = "SELECT * FROM kocaelispor";
-                            NpgsqlDataAdapter da15 = new NpgsqlDataAdapter(sorgu15, baglanti);
-                            DataSet ds15 = new DataSet();
-                            da15.Fill(ds15);
-                            dataGridView1.DataSource = ds15.Tables[0];
-                            break;
-
-                        case "16":
-                            string sorgu16 = "SELECT * FROM gstribunderbi";
-                            NpgsqlDataAdapter da16 = new NpgsqlDataAdapter(sorgu16, baglanti);
-                            DataSet ds16 = new DataSet();
-                            da16.Fill(ds16);
-                            dataGridView1.DataSource = ds16.Tables[0];
-                            break;
-
-                        case "17":
-                            string sorgu17 = "SELECT * FROM sivasspor";
-                            NpgsqlDataAdapter da17 = new NpgsqlDataAdapter(sorgu17, baglanti);
-                            DataSet ds17 = new DataSet();
-                            da17.Fill(ds17);
-                            dataGridView1.DataSource = ds17.Tables[0];
-                            break;
-
-                        case "18":
-                            string sorgu18 = "SELECT * FROM fenerbahçetribunderbi";
-                            NpgsqlDataAdapter da18 = new NpgsqlDataAdapter(sorgu18, baglanti);
-                            DataSet ds18 = new DataSet();
-                            da18.Fill(ds18);
-                            dataGridView1.DataSource = ds18.Tables[0];
-                            break;
-
-                        case "19":
-                            string sorgu19 = "SELECT * FROM giresunspor";
-                            NpgsqlDataAdapter da19 = new NpgsqlDataAdapter(sorgu19, baglanti);
-                            DataSet ds19 = new DataSet();
-                            da19.Fill(ds19);
-                            dataGridView1.DataSource = ds19.Tables[0];
-                            break;
-
-                        case "20":
-                            string sorgu20 = "SELECT * FROM göztepe";
-                            NpgsqlDataAdapter da20 = new NpgsqlDataAdapter(sorgu20, baglanti);
-                            DataSet ds20 = new DataSet();
-                            da20.Fill(ds20);
-                            dataGridView1.DataSource = ds20.Tables[0];
-                            break;
-
-                        case "21":
-                            string sorgu21 = "SELECT * FROM keciören";
-                            NpgsqlDataAdapter da21 = new NpgsqlDataAdapter(sorgu21, baglanti);
-                            DataSet ds21 = new DataSet();
-                            da21.Fill(ds21);
-                            dataGridView1.DataSource = ds21.Tables[0];
-                            break;
-
-                        case "22":
-                            string sorgu22 = "SELECT * FROM manisa";
-                            NpgsqlDataAdapter da22 = new NpgsqlDataAdapter(sorgu22, baglanti);
-                            DataSet ds22 = new DataSet();
-                            da22.Fill(ds22);
-                            dataGridView1.DataSource = ds22.Tables[0];
-                            break;
-
-                        case "23":
-                            string sorgu23 = "SELECT * FROM sakaryaspor";
-                            NpgsqlDataAdapter da23 = new NpgsqlDataAdapter(sorgu23, baglanti);
-                            DataSet ds23 = new DataSet();
-                            da23.Fill(ds23);
-                            dataGridView1.DataSource = ds23.Tables[0];
-                            break;
-
-
-                        case "24":
-                            string sorgu24 = "SELECT * FROM gstribunnormal";
-                            NpgsqlDataAdapter da24 = new NpgsqlDataAdapter(sorgu24, baglanti);
-                            DataSet ds24 = new DataSet();
-                            da24.Fill(ds24);
-                            dataGridView1.DataSource = ds24.Tables[0];
-                            break;
-
-
-
-
-                        default:
-                            // Tanımlanmayan bir etkinlik tipi durumunda hata mesajı gösterin
-                            MessageBox.Show("Tanımsız Maç: " + secilenTribun);
-                            break;
+                        NpgsqlDataAdapter da = new NpgsqlDataAdapter(sorgu, baglanti);
+                        DataSet ds = new DataSet();
+                        da.Fill(ds);
+                        dataGridView1.DataSource = ds.Tables[0];
+                        labelSecilenTakim.Text = "Seçilen Takım: ";
+                        labelTakimIsmi.Text = GetTakimIsmi(secilenTribun);
+                    }
+                    else
+                    {
+                        // Tanımlanmayan bir etkinlik tipi durumunda hata mesajı gösterin
+                        MessageBox.Show("Tanımsız Maç: " + secilenTribun);
                     }
                 }
             }
         }
 
+        private string GetTakimIsmi(string secilenTribun)
+        {
+            switch (secilenTribun)
+            {
+                case "1":
+                case "11":
+                case "16":
+                case "24":
+                    return "Beşiktaş";
+                case "2":
+                case "18":
+                    return "Fenerbahçe";
+                case "3":
+                case "8":
+                    return "Galatasaray";
+                case "4":
+                    return "Samsunspor";
+                case "5":
+                    return "Adana Demirspor";
+                case "6":
+                    return "Adanaspor";
+                case "7":
+                    return "Altay";
+                case "9":
+                    return "Bandırmaspor";
+                case "10":
+                    return "Boluspor";
+                case "12":
+                    return "Çorum FK";
+                case "13":
+                    return "Ankaragücü";
+                case "14":
+                    return "Gençlerbirliği";
+                case "15":
+                    return "Kocaelispor";
+                case "17":
+                    return "Sivasspor";
+                case "19":
+                    return "Giresunspor";
+                case "20":
+                    return "Göztepe";
+                case "21":
+                    return "Keciören";
+                case "22":
+                    return "Manisa";
+                case "23":
+                    return "Sakaryaspor";
+                default:
+                    return "Bilinmeyen Takım";
+            }
+        }
 
-
-      
 
 
         private void BtnBilgileriGöster_Click(object sender, EventArgs e)
