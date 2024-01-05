@@ -32,8 +32,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.BtnMacListele = new System.Windows.Forms.Button();
             this.TribunIDcomboBox1 = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.BtnBilgileriGöster = new System.Windows.Forms.Button();
             this.labelBlok = new System.Windows.Forms.Label();
             this.Bilgiler = new System.Windows.Forms.Label();
@@ -88,26 +86,6 @@
             this.TribunIDcomboBox1.Name = "TribunIDcomboBox1";
             this.TribunIDcomboBox1.Size = new System.Drawing.Size(109, 24);
             this.TribunIDcomboBox1.TabIndex = 7;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.Location = new System.Drawing.Point(115, 435);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(175, 29);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Seçilen Tribün";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label3.Location = new System.Drawing.Point(559, 435);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(131, 29);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Bilet Fiyatı";
             // 
             // BtnBilgileriGöster
             // 
@@ -253,8 +231,6 @@
             this.Controls.Add(this.Bilgiler);
             this.Controls.Add(this.labelBlok);
             this.Controls.Add(this.BtnBilgileriGöster);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.TribunIDcomboBox1);
             this.Controls.Add(this.BtnMacListele);
             this.Controls.Add(this.label2);
@@ -275,8 +251,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button BtnMacListele;
         private System.Windows.Forms.ComboBox TribunIDcomboBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button BtnBilgileriGöster;
         private System.Windows.Forms.Label labelBlok;
         private System.Windows.Forms.Label Bilgiler;

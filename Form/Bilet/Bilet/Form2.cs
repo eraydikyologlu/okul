@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Bilet.FutbolForm;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Bilet
@@ -24,6 +25,16 @@ namespace Bilet
             get { return eposta; }
             private set { eposta = value; }
         }
+
+        public class BiletBilgisi
+        {
+            public int KullaniciId { get; set; }
+            public string Eposta { get; set; }
+            public int TribunId { get; set; }
+            public string TribunAd { get; set; }
+            public int BiletSayisi { get; set; }
+        }
+
         public int KullaniciId // Yeni eklenen kullaniciId özelliği
         {
             get { return kullaniciId; }
@@ -92,12 +103,12 @@ namespace Bilet
             // Eğer seçilen öğe bir DataRowView öğesi ise, metnini bir string değişkenine dönüştürün
             if (secilenOge is DataRowView)
             {
-                string secilenEtkinlik = ((DataRowView)secilenOge).Row["macid"].ToString();
+                string secilenTribun = ((DataRowView)secilenOge).Row["macid"].ToString();
 
-                if (!string.IsNullOrEmpty(secilenEtkinlik))
+                if (!string.IsNullOrEmpty(secilenTribun))
                 {
                     // Seçilen etkinlik tipine göre uygun formu açın
-                    switch (secilenEtkinlik)
+                    switch (secilenTribun)
                     {
                         case "1":
                             string sorgu = "select * from gstribun";
@@ -139,7 +150,7 @@ namespace Bilet
 
                         default:
                             // Tanımlanmayan bir etkinlik tipi durumunda hata mesajı gösterin
-                            MessageBox.Show("Tanımsız Maç: " + secilenEtkinlik);
+                            MessageBox.Show("Tanımsız Maç: " + secilenTribun);
                             break;
                     }
                 }
@@ -157,8 +168,7 @@ namespace Bilet
             baglanti.Open();
 
             // Kullanıcının belirli tribündeki bilet bilgilerini sorgula
-            NpgsqlCommand comut = new NpgsqlCommand("SELECT * FROM biletalanlar WHERE kullaniciid = @kullaniciid", baglanti);
-            comut.Parameters.AddWithValue("@kullaniciid", kullaniciId);
+            NpgsqlCommand comut = new NpgsqlCommand("SELECT b.eposta, g.tribunad, b.biletsayisi,f.evsahibitakim\r\nFROM biletalanlar b\r\nJOIN gstribun g ON b.tribunid = g.tribunid\r\nJOIN futbol f ON b.macid = f.macid", baglanti);
 
             NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(comut);
             DataTable dataTable = new DataTable();
@@ -244,81 +254,96 @@ namespace Bilet
         private void BiletSatınAl_Click(object sender, EventArgs e)
         {
             
-                string eposta = girisForm.Eposta;
-                try
+            string eposta = girisForm.Eposta;
+            try
+            {
+                baglanti.Open();
+                object secilenTribunOge = TribunIDcomboBox1.SelectedItem;
+                object secilenMacOge = macIDcomboBox1.SelectedItem;
+
+
+                if (secilenTribunOge is DataRowView && secilenMacOge is DataRowView)
                 {
-                    baglanti.Open();
-                    object secilenOge = TribunIDcomboBox1.SelectedItem;
+                    string secilenTribun = ((DataRowView)secilenTribunOge).Row["tribunid"].ToString();
+                    string secilenMac = ((DataRowView)secilenMacOge).Row["macid"].ToString();
 
-                    if (secilenOge is DataRowView)
+                    if (!string.IsNullOrEmpty(secilenTribun) && !string.IsNullOrEmpty(secilenMac))
                     {
-                        string secilenEtkinlik = ((DataRowView)secilenOge).Row["tribunid"].ToString();
-                        string biletsorgu = "";
+                        int tribunid = int.Parse(secilenTribun);
+                        int biletsayisi = int.Parse(BiletSayisitextBox1.Text);
+                        int macid = int.Parse(secilenMac);
 
-                        if (!string.IsNullOrEmpty(secilenEtkinlik))
+                        if (secilenTribun == "1" || secilenTribun == "2" || secilenTribun == "3" || secilenTribun == "4" || secilenTribun == "5" || secilenTribun == "6" || secilenTribun == "7" || secilenTribun == "8" || secilenTribun == "9")
                         {
-                            int tribunid = int.Parse(TribunIDcomboBox1.Text);
-                            int biletsayisi = int.Parse(BiletSayisitextBox1.Text);
+                            // Kullanıcının belirlediği tribünden daha önce aldığı bilet sayısını kontrol et
 
-                            if (secilenEtkinlik == "1" || secilenEtkinlik == "2" || secilenEtkinlik == "3" || secilenEtkinlik == "4" || secilenEtkinlik == "5" || secilenEtkinlik == "6" || secilenEtkinlik == "7" || secilenEtkinlik == "8" || secilenEtkinlik == "9")
+                            string kontrolSorgu = "SELECT biletsayisi FROM biletalanlar WHERE kullaniciid = @kullaniciid AND tribunid = @tribunid AND macid = @macid";
+
+                            using (NpgsqlCommand kontrolCommand = new NpgsqlCommand(kontrolSorgu, baglanti))
                             {
-                                // Kullanıcının belirlediği tribünden daha önce aldığı bilet sayısını kontrol et
-                                string kontrolSorgu = "SELECT biletsayisi FROM biletalanlar WHERE kullaniciid = @kullaniciid AND tribunid = @tribunid";
-                                using (NpgsqlCommand kontrolCommand = new NpgsqlCommand(kontrolSorgu, baglanti))
+
+                                kontrolCommand.Parameters.AddWithValue("@kullaniciid", kullaniciId);
+                                kontrolCommand.Parameters.AddWithValue("@tribunid", tribunid);
+                                kontrolCommand.Parameters.AddWithValue("@macid", macid);
+
+
+                                int alinanBiletSayisi = Convert.ToInt32(kontrolCommand.ExecuteScalar());
+
+                                // Toplam bilet sayısını kontrol et
+                                if (alinanBiletSayisi + biletsayisi > 3)
                                 {
-                                    kontrolCommand.Parameters.AddWithValue("@kullaniciid", kullaniciId);
-                                    kontrolCommand.Parameters.AddWithValue("@tribunid", tribunid);
-
-                                    int alinanBiletSayisi = Convert.ToInt32(kontrolCommand.ExecuteScalar());
-
-                                    // Toplam bilet sayısını kontrol et
-                                    if (alinanBiletSayisi + biletsayisi > 3)
-                                    {
-                                        MessageBox.Show("Toplam bilet sayısı 3'ten fazla olamaz!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                        return;
-                                    }
-
-                                    // Eğer aynı kombinasyon ile kayıt varsa, güncelleme yap
-                                    if (alinanBiletSayisi > 0)
-                                    {
-                                        string guncelleSorgu = "UPDATE biletalanlar SET biletsayisi = biletsayisi + @biletsayisi WHERE kullaniciid = @kullaniciid AND tribunid = @tribunid";
-                                        using (NpgsqlCommand guncelleCommand = new NpgsqlCommand(guncelleSorgu, baglanti))
-                                        {
-                                            guncelleCommand.Parameters.AddWithValue("@kullaniciid", kullaniciId);
-                                            guncelleCommand.Parameters.AddWithValue("@tribunid", tribunid);
-                                            guncelleCommand.Parameters.AddWithValue("@biletsayisi", biletsayisi);
-                                            guncelleCommand.ExecuteNonQuery();
-                                        }
-
-                                        MessageBox.Show("Bilet sayısı güncellendi!");
-                                        return;
-                                    }
+                                    MessageBox.Show("Toplam bilet sayısı 3'ten fazla olamaz!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
                                 }
 
-                                // Eğer aynı kombinasyon ile kayıt yoksa, yeni bir kayıt ekle
-                                string ekleSorgu = "INSERT INTO biletalanlar (kullaniciid, eposta, tribunid, tribun_ad, biletsayisi) VALUES (@kullaniciid, @eposta, @tribunID,'Doğu tribun üst', @biletsayisi)";
-                                using (NpgsqlCommand kmt = new NpgsqlCommand(ekleSorgu, baglanti))
+                                // Eğer aynı kombinasyon ile kayıt varsa, güncelleme yap
+                                if (alinanBiletSayisi > 0)
                                 {
-                                    kmt.Parameters.AddWithValue("@kullaniciid", kullaniciId);
-                                    kmt.Parameters.AddWithValue("@eposta", eposta);
-                                    kmt.Parameters.AddWithValue("@tribunid", tribunid);
-                                    kmt.Parameters.AddWithValue("@biletsayisi", biletsayisi);
-                                    kmt.ExecuteNonQuery();
-                                }
+                                    string guncelleSorgu = "UPDATE biletalanlar SET biletsayisi = biletsayisi + @biletsayisi WHERE kullaniciid = @kullaniciid AND tribunid = @tribunid AND macid = @macid";
+                                    using (NpgsqlCommand guncelleCommand = new NpgsqlCommand(guncelleSorgu, baglanti))
+                                    {
+                                        guncelleCommand.Parameters.AddWithValue("@kullaniciid", kullaniciId);
+                                        guncelleCommand.Parameters.AddWithValue("@tribunid", tribunid);
+                                        guncelleCommand.Parameters.AddWithValue("@macid", macid);
+                                        guncelleCommand.Parameters.AddWithValue("@biletsayisi", biletsayisi);
+                                        guncelleCommand.ExecuteNonQuery();
+                                    }
 
-                                MessageBox.Show("Bilet satın alındı!");
+                                    MessageBox.Show("Bilet sayısı güncellendi!");
+                                    return;
+                                }
                             }
-                        }
+
+
+                            // Eğer aynı kombinasyon ile kayıt yoksa, yeni bir kayıt ekle
+                            string ekleSorgu = "INSERT INTO biletalanlar (kullaniciid, eposta, tribunid, biletsayisi, macid) VALUES (@kullaniciid, @eposta, @tribunID, @biletsayisi, @macid)";
+                            using (NpgsqlCommand kmt2 = new NpgsqlCommand(ekleSorgu, baglanti))
+                            {
+                                kmt2.Parameters.AddWithValue("@kullaniciid", kullaniciId);
+                                kmt2.Parameters.AddWithValue("@eposta", eposta);
+                                kmt2.Parameters.AddWithValue("@tribunID", tribunid);
+                                kmt2.Parameters.AddWithValue("@biletsayisi", biletsayisi);
+                                kmt2.Parameters.AddWithValue("@macid",macid);
+
+
+
+                                kmt2.ExecuteNonQuery();
+                            }
+
+                            MessageBox.Show("Bilet satın alındı!");
+
+                        }  
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Hata: " + ex.Message);
-                }
-                finally
-                {
-                    baglanti.Close();
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hata: " + ex.Message);
+            }
+            finally
+            {
+                baglanti.Close();
+            }
            
         }
     }
