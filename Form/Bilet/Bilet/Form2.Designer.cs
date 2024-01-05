@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
             this.BtnMacListele = new System.Windows.Forms.Button();
@@ -45,7 +46,12 @@
             this.label6 = new System.Windows.Forms.Label();
             this.BiletSayisitextBox1 = new System.Windows.Forms.TextBox();
             this.BiletSatınAl = new System.Windows.Forms.Button();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.textBox1Arama = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.DerbiGosterBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -136,9 +142,9 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.button1.Location = new System.Drawing.Point(862, 220);
+            this.button1.Location = new System.Drawing.Point(860, 205);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(212, 73);
+            this.button1.Size = new System.Drawing.Size(212, 71);
             this.button1.TabIndex = 18;
             this.button1.Text = "Maçları Listele";
             this.button1.UseVisualStyleBackColor = true;
@@ -151,7 +157,6 @@
             this.macIDcomboBox1.Name = "macIDcomboBox1";
             this.macIDcomboBox1.Size = new System.Drawing.Size(109, 24);
             this.macIDcomboBox1.TabIndex = 19;
-            this.macIDcomboBox1.SelectedIndexChanged += new System.EventHandler(this.macIDcomboBox1_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -205,7 +210,7 @@
             // BiletSatınAl
             // 
             this.BiletSatınAl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.BiletSatınAl.Location = new System.Drawing.Point(862, 299);
+            this.BiletSatınAl.Location = new System.Drawing.Point(865, 299);
             this.BiletSatınAl.Name = "BiletSatınAl";
             this.BiletSatınAl.Size = new System.Drawing.Size(209, 62);
             this.BiletSatınAl.TabIndex = 26;
@@ -213,11 +218,43 @@
             this.BiletSatınAl.UseVisualStyleBackColor = true;
             this.BiletSatınAl.Click += new System.EventHandler(this.BiletSatınAl_Click);
             // 
+            // textBox1Arama
+            // 
+            this.textBox1Arama.Location = new System.Drawing.Point(1186, 122);
+            this.textBox1Arama.Name = "textBox1Arama";
+            this.textBox1Arama.Size = new System.Drawing.Size(129, 22);
+            this.textBox1Arama.TabIndex = 27;
+            this.textBox1Arama.TextChanged += new System.EventHandler(this.textBox1Arama_TextChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label1.Location = new System.Drawing.Point(1113, 119);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(43, 25);
+            this.label1.TabIndex = 28;
+            this.label1.Text = "Ara";
+            // 
+            // DerbiGosterBtn
+            // 
+            this.DerbiGosterBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.DerbiGosterBtn.Location = new System.Drawing.Point(1166, 174);
+            this.DerbiGosterBtn.Name = "DerbiGosterBtn";
+            this.DerbiGosterBtn.Size = new System.Drawing.Size(173, 40);
+            this.DerbiGosterBtn.TabIndex = 30;
+            this.DerbiGosterBtn.Text = "Derbileri Göster";
+            this.DerbiGosterBtn.UseVisualStyleBackColor = true;
+            this.DerbiGosterBtn.Click += new System.EventHandler(this.DerbiGosterBtn_Click);
+            // 
             // FutbolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1434, 549);
+            this.Controls.Add(this.DerbiGosterBtn);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.textBox1Arama);
             this.Controls.Add(this.BiletSatınAl);
             this.Controls.Add(this.BiletSayisitextBox1);
             this.Controls.Add(this.label6);
@@ -240,6 +277,7 @@
             this.Text = "Futbol";
             this.Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -264,5 +302,9 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox BiletSayisitextBox1;
         private System.Windows.Forms.Button BiletSatınAl;
+        private System.Windows.Forms.BindingSource bindingSource1;
+        private System.Windows.Forms.TextBox textBox1Arama;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button DerbiGosterBtn;
     }
 }
