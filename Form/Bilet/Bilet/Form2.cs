@@ -466,5 +466,73 @@ namespace Bilet
                 dataGridView1.DataSource = ds.Tables[0];
             }
         }
+
+        private void BtnBakiyeTanımla_Click(object sender, EventArgs e)
+        {
+            
+            string kartNumarasi = KartNumarasiTextBox.Text;
+            string kartSahibi = KartSahibiTextBox.Text;
+            string cvc = CVCTextBox.Text;
+            bakiyeLabel.Text = "Bakiye: ";
+            bakiyeBurdaLabel.Text = BakiyeYukletextBox.Text;
+
+            if (kartNumarasi.Length != 12)
+            {
+                MessageBox.Show("Kart numarası 12 haneli olmalıdır.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (kartSahibi.Any(char.IsDigit) || kartSahibi.Any(char.IsPunctuation))
+            {
+                MessageBox.Show("Kart sahibi isminde özel karakter veya sayı bulunmamalıdır.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (cvc.Length != 3)
+            {
+                MessageBox.Show("CVC numarası 3 haneli olmalıdır.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(BakiyeYukletextBox.Text))
+            {
+                MessageBox.Show("Bakiye Girin!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!int.TryParse(BakiyeYukletextBox.Text, out int enteredBakiye) || enteredBakiye > 10000)
+            {
+                MessageBox.Show("Bakiye en fazla 10,000 TL olmalıdır.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
+            string connectionString = "server=localhost;port=5432;Database=passo;user ID = postgres; password=admin";
+            int girilenBakiye = int.Parse(BakiyeYukletextBox.Text);
+            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+            {
+                connection.Open();
+
+                // Get the user's ID based on their eposta (replace 'your_email' with the actual email)
+                NpgsqlCommand getUserIdCommand = new NpgsqlCommand("SELECT kullaniciid FROM users WHERE eposta = @Eposta", connection);
+                getUserIdCommand.Parameters.AddWithValue("@Eposta", eposta); // Replace with the actual eposta
+                int userId = Convert.ToInt32(getUserIdCommand.ExecuteScalar());
+
+                // Update the bakiye column for the user
+                NpgsqlCommand updateBakiyeCommand = new NpgsqlCommand("UPDATE users SET bakiye = @EnteredBakiye WHERE kullaniciid = @UserId", connection);
+                updateBakiyeCommand.Parameters.AddWithValue("@EnteredBakiye", girilenBakiye);
+                updateBakiyeCommand.Parameters.AddWithValue("@UserId", userId);
+                updateBakiyeCommand.ExecuteNonQuery();
+
+                connection.Close();
+            }
+
+            // If all validations pass, you can proceed with saving the card details or any other necessary actions.
+            // ...
+
+            MessageBox.Show("Bakiye tanımlama başarılı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            
+
+        }
     }
 }

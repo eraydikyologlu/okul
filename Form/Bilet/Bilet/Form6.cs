@@ -5,10 +5,13 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Net.Mail;
+
 
 namespace Bilet
 {
@@ -55,7 +58,7 @@ namespace Bilet
             {
                 connection.Open();
 
-                string query = "SELECT COUNT(*) FROM kullanicilar WHERE Eposta = @Eposta AND sifre = @Sifre";
+                string query = "SELECT COUNT(*) FROM users WHERE Eposta = @Eposta AND sifre = @Sifre";
                 using (NpgsqlCommand command = new NpgsqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@Eposta", Eposta);
@@ -66,7 +69,7 @@ namespace Bilet
                     if (kullaniciSayisi > 0)
                     {
                         // Kullanıcı doğrulandı, kullanıcı ID'sini alabilirsiniz.
-                        string query2 = "SELECT kullaniciid FROM kullanicilar WHERE Eposta = @Eposta";
+                        string query2 = "SELECT kullaniciid FROM users WHERE Eposta = @Eposta";
                         using (NpgsqlCommand command2 = new NpgsqlCommand(query2, connection))
                         {
                             command2.Parameters.AddWithValue("@Eposta", Eposta);
@@ -95,26 +98,89 @@ namespace Bilet
 
         }
 
+
+        private bool IsValidEmail(string email)
+            {
+                try
+                {
+                    var mailAddress = new MailAddress(email);
+                    return mailAddress.Address == email && (email.EndsWith("gmail.com") || email.EndsWith("outlook.com"));
+                }
+                catch (FormatException)
+                {
+                    return false;
+                }
+            }
+
+        private static List<char> turkishCharacters = new List<char> { 'ğ', 'ü', 'ş', 'ı', 'ö', 'ç', 'Ğ', 'Ü', 'Ş', 'İ', 'Ö', 'Ç' };
+
+        private bool ContainsTurkishCharacters(string text)
+        {
+            foreach (char c in text)
+            {
+                if (turkishCharacters.Contains(c))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+
+
         private void BtnKayıt_Click(object sender, EventArgs e)
         {
             Eposta = ePostaTextBox1.Text;
             string sifre = SifretextBox2.Text;
             baglanti.Open();
-            if(!string.IsNullOrEmpty(Eposta) || !string.IsNullOrEmpty(sifre))
-            {
-                NpgsqlCommand command = new NpgsqlCommand("insert into kullanicilar (Eposta,sifre) values(@Eposta,@sifre)", baglanti);
-                command.Parameters.AddWithValue("@Eposta", Eposta);
-                command.Parameters.AddWithValue("@sifre", sifre);
-                command.ExecuteNonQuery();
-                MessageBox.Show("Kullanıcı kaydı başarılı bir şekilde gerçekleşti.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+            if (!string.IsNullOrEmpty(Eposta) && !string.IsNullOrEmpty(sifre))
+            {
+                if (!IsValidEmail(Eposta))
+                {
+                    MessageBox.Show("Geçersiz e-posta adresi! Lütfen gmail veya outlook kullanın.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (ContainsTurkishCharacters(sifre))
+                {
+                    MessageBox.Show("Şifre Türkçe karakter içermemelidir.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (ContainsTurkishCharacters(Eposta))
+                {
+                    MessageBox.Show("E-posta Türkçe karakter içermemelidir.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    // E-posta adresini kontrol et
+                    NpgsqlCommand checkCommand = new NpgsqlCommand("SELECT COUNT(*) FROM users WHERE Eposta = @Eposta", baglanti);
+                    checkCommand.Parameters.AddWithValue("@Eposta", Eposta);
+
+                    int existingCount = Convert.ToInt32(checkCommand.ExecuteScalar());
+
+                    if (existingCount > 0)
+                    {
+                        MessageBox.Show("Bu e-posta adresi zaten kullanımda.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        // E-posta adresi veritabanında yoksa kaydı yap
+                        NpgsqlCommand insertCommand = new NpgsqlCommand("INSERT INTO users (Eposta, sifre) VALUES (@Eposta, @sifre)", baglanti);
+                        insertCommand.Parameters.AddWithValue("@Eposta", Eposta);
+                        insertCommand.Parameters.AddWithValue("@sifre", sifre);
+                        insertCommand.ExecuteNonQuery();
+                        MessageBox.Show("Kullanıcı kaydı başarılı bir şekilde gerçekleşti.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
             }
             else
             {
-                MessageBox.Show("E-posta veya şifre boş kalamaz!","Hata",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("E-posta veya şifre boş kalamaz!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
             baglanti.Close();
         }
+
+
 
         private void sifreunuttumLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
