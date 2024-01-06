@@ -101,58 +101,52 @@ namespace Bilet
         {
             object secilenOge = macIDcomboBox1.SelectedItem;
 
-            // Eğer seçilen öğe bir DataRowView öğesi ise, metnini bir string değişkenine dönüştürün
             if (secilenOge is DataRowView)
             {
                 string secilenTribun = ((DataRowView)secilenOge).Row["macid"].ToString();
 
                 if (!string.IsNullOrEmpty(secilenTribun))
                 {
-                    Dictionary<string, string> sorgular = new Dictionary<string, string>
-            {
-                { "1", "select * from beşiktaştribunnormal" },
-                { "2", "select * from fenerbahçetribunnormal" },
-                { "3", "select * from gstribunnormal" },
-                { "4", "select * from samsunspor" },
-                { "5", "select * from adanademirspor" },
-                { "6", "select * from adanaspor" },
-                { "7", "SELECT * FROM altay" },
-                { "8", "SELECT * FROM bandırmaspor" },
-                { "9", "SELECT * FROM boluspor" },
-                { "10", "SELECT * FROM corumfk" },
-                { "11", "SELECT * FROM beşiktaştribunderbi" },
-                { "12", "SELECT * FROM kayserispor" },
-                { "13", "SELECT * FROM ankaragücü" },
-                { "14", "SELECT * FROM genclerbirligi" },
-                { "15", "SELECT * FROM kocaelispor" },
-                { "16", "SELECT * FROM gstribunderbi" },
-                { "17", "SELECT * FROM sivasspor" },
-                { "18", "SELECT * FROM fenerbahçetribunderbi" },
-                { "19", "SELECT * FROM giresunspor" },
-                { "20", "SELECT * FROM göztepe" },
-                { "21", "SELECT * FROM keciören" },
-                { "22", "SELECT * FROM manisa" },
-                { "23", "SELECT * FROM sakaryaspor" },
-                { "24", "SELECT * FROM gstribunnormal" },
-            };
+                    string sorgu;
 
-                    if (sorgular.TryGetValue(secilenTribun, out string sorgu))
+                    // Check if the selected macID is 11, 16, 18, or 24
+                    int macID = Convert.ToInt32(secilenTribun);
+                    if (macID == 11 || macID == 16 || macID == 18 || macID == 24)
                     {
-                        NpgsqlDataAdapter da = new NpgsqlDataAdapter(sorgu, baglanti);
-                        DataSet ds = new DataSet();
-                        da.Fill(ds);
-                        dataGridView1.DataSource = ds.Tables[0];
-                        labelSecilenTakim.Text = "Seçilen Takım: ";
-                        labelTakimIsmi.Text = GetTakimIsmi(secilenTribun);
+                        // Use derbisorgu for specific macID values
+                        sorgu = "SELECT d.tribunid, tribunler.tribunad, d.biletfiyati " +
+                                "FROM derbi_tribunler d " +
+                                "JOIN tribunler ON d.tribunid = tribunler.tribunid " +
+                                "WHERE d.evsahibiid = @macID";
                     }
                     else
                     {
-                        // Tanımlanmayan bir etkinlik tipi durumunda hata mesajı gösterin
-                        MessageBox.Show("Tanımsız Maç: " + secilenTribun);
+                        // Use the default sorgu for other macID values
+                        sorgu = "SELECT tribunler.tribunid, tribunler.tribunad, biletfiyatlari.biletfiyati " +
+                                "FROM biletfiyatlari " +
+                                "JOIN takimlar ON biletfiyatlari.takimid = takimlar.takimid " +
+                                "JOIN tribunler ON biletfiyatlari.tribunid = tribunler.tribunid " +
+                                "WHERE takimlar.takimid = @macID";
                     }
+
+                    NpgsqlCommand cmd = new NpgsqlCommand(sorgu, baglanti);
+                    cmd.Parameters.AddWithValue("@macID", Convert.ToInt32(secilenTribun));
+
+                    NpgsqlDataAdapter da = new NpgsqlDataAdapter(cmd);
+                    DataSet ds = new DataSet();
+                    da.Fill(ds);
+                    dataGridView1.DataSource = ds.Tables[0];
+                    labelSecilenTakim.Text = "Seçilen Takım: ";
+                    labelTakimIsmi.Text = GetTakimIsmi(secilenTribun);
+                }
+                else
+                {
+                    MessageBox.Show("Tanımsız Maç: " + secilenTribun);
                 }
             }
         }
+
+
 
         private string GetTakimIsmi(string secilenTribun)
         {
@@ -214,7 +208,7 @@ namespace Bilet
             baglanti.Open();
 
             // Kullanıcının belirli tribündeki bilet bilgilerini sorgula
-            NpgsqlCommand comut = new NpgsqlCommand("SELECT b.eposta, g.tribunad, b.biletsayisi,m.evsahibi\r\nFROM biletalanlar b\r\nJOIN gstribun g ON b.tribunid = g.tribunid\r\nJOIN maclar m ON b.macid = m.macid", baglanti);
+            NpgsqlCommand comut = new NpgsqlCommand("SELECT b.eposta, t.tribunad, b.biletsayisi,m.evsahibi\r\nFROM biletalanlar b\r\nJOIN tribunler t ON b.tribunid = g.tribunid\r\nJOIN maclar m ON b.macid = m.macid", baglanti);
 
             NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(comut);
             DataTable dataTable = new DataTable();
