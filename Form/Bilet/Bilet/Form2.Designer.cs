@@ -41,7 +41,6 @@
             this.macIDcomboBox1 = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.BiletSilBtn = new System.Windows.Forms.Button();
-            this.BiletGuncelleBtn = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.BiletSayisitextBox1 = new System.Windows.Forms.TextBox();
             this.BiletSatınAl = new System.Windows.Forms.Button();
@@ -61,7 +60,8 @@
             this.label10 = new System.Windows.Forms.Label();
             this.BakiyeYukletextBox = new System.Windows.Forms.TextBox();
             this.bakiyeLabel = new System.Windows.Forms.Label();
-            this.bakiyeBurdaLabel = new System.Windows.Forms.Label();
+            this.tanimlananbakiyelabel = new System.Windows.Forms.Label();
+            this.mevcutbakiyelabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -189,17 +189,6 @@
             this.BiletSilBtn.Text = "Bileti Sil";
             this.BiletSilBtn.UseVisualStyleBackColor = true;
             this.BiletSilBtn.Click += new System.EventHandler(this.BiletSilBtn_Click);
-            // 
-            // BiletGuncelleBtn
-            // 
-            this.BiletGuncelleBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.BiletGuncelleBtn.Location = new System.Drawing.Point(1131, 384);
-            this.BiletGuncelleBtn.Name = "BiletGuncelleBtn";
-            this.BiletGuncelleBtn.Size = new System.Drawing.Size(215, 32);
-            this.BiletGuncelleBtn.TabIndex = 22;
-            this.BiletGuncelleBtn.Text = "Bilet güncelle";
-            this.BiletGuncelleBtn.UseVisualStyleBackColor = true;
-            this.BiletGuncelleBtn.Click += new System.EventHandler(this.BiletGuncelleBtn_Click);
             // 
             // label6
             // 
@@ -369,26 +358,36 @@
             // 
             this.bakiyeLabel.AutoSize = true;
             this.bakiyeLabel.Font = new System.Drawing.Font("Microsoft Yi Baiti", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bakiyeLabel.Location = new System.Drawing.Point(836, 182);
+            this.bakiyeLabel.Location = new System.Drawing.Point(835, 211);
             this.bakiyeLabel.Name = "bakiyeLabel";
             this.bakiyeLabel.Size = new System.Drawing.Size(0, 28);
             this.bakiyeLabel.TabIndex = 43;
             // 
-            // bakiyeBurdaLabel
+            // tanimlananbakiyelabel
             // 
-            this.bakiyeBurdaLabel.AutoSize = true;
-            this.bakiyeBurdaLabel.Font = new System.Drawing.Font("Microsoft Yi Baiti", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bakiyeBurdaLabel.Location = new System.Drawing.Point(960, 182);
-            this.bakiyeBurdaLabel.Name = "bakiyeBurdaLabel";
-            this.bakiyeBurdaLabel.Size = new System.Drawing.Size(0, 28);
-            this.bakiyeBurdaLabel.TabIndex = 44;
+            this.tanimlananbakiyelabel.AutoSize = true;
+            this.tanimlananbakiyelabel.Font = new System.Drawing.Font("Microsoft Yi Baiti", 13.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tanimlananbakiyelabel.Location = new System.Drawing.Point(835, 171);
+            this.tanimlananbakiyelabel.Name = "tanimlananbakiyelabel";
+            this.tanimlananbakiyelabel.Size = new System.Drawing.Size(0, 22);
+            this.tanimlananbakiyelabel.TabIndex = 44;
+            // 
+            // mevcutbakiyelabel
+            // 
+            this.mevcutbakiyelabel.AutoSize = true;
+            this.mevcutbakiyelabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.mevcutbakiyelabel.Location = new System.Drawing.Point(840, 9);
+            this.mevcutbakiyelabel.Name = "mevcutbakiyelabel";
+            this.mevcutbakiyelabel.Size = new System.Drawing.Size(0, 25);
+            this.mevcutbakiyelabel.TabIndex = 45;
             // 
             // FutbolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1434, 549);
-            this.Controls.Add(this.bakiyeBurdaLabel);
+            this.Controls.Add(this.mevcutbakiyelabel);
+            this.Controls.Add(this.tanimlananbakiyelabel);
             this.Controls.Add(this.bakiyeLabel);
             this.Controls.Add(this.BakiyeYukletextBox);
             this.Controls.Add(this.label10);
@@ -408,7 +407,6 @@
             this.Controls.Add(this.BiletSatınAl);
             this.Controls.Add(this.BiletSayisitextBox1);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.BiletGuncelleBtn);
             this.Controls.Add(this.BiletSilBtn);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.macIDcomboBox1);
@@ -447,7 +445,6 @@
         private System.Windows.Forms.ComboBox macIDcomboBox1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button BiletSilBtn;
-        private System.Windows.Forms.Button BiletGuncelleBtn;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox BiletSayisitextBox1;
         private System.Windows.Forms.Button BiletSatınAl;
@@ -467,6 +464,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox BakiyeYukletextBox;
         private System.Windows.Forms.Label bakiyeLabel;
-        private System.Windows.Forms.Label bakiyeBurdaLabel;
+        private System.Windows.Forms.Label tanimlananbakiyelabel;
+        private System.Windows.Forms.Label mevcutbakiyelabel;
     }
 }
