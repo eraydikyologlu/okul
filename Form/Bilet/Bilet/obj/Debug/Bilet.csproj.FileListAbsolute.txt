@@ -27,8 +27,5 @@ C:\Users\erayd\source\repos\Bilet\Bilet\bin\Debug\System.Threading.Tasks.Extensi
 C:\Users\erayd\source\repos\Bilet\Bilet\bin\Debug\System.ValueTuple.xml
 C:\Users\erayd\source\repos\Bilet\Bilet\obj\Debug\Bilet.csproj.CopyComplete
 C:\Users\erayd\source\repos\Bilet\Bilet\obj\Debug\Bilet.FutbolForm.resources
-C:\Users\erayd\source\repos\Bilet\Bilet\obj\Debug\Bilet.SinemaForm.resources
-C:\Users\erayd\source\repos\Bilet\Bilet\obj\Debug\Bilet.KonserForm.resources
-C:\Users\erayd\source\repos\Bilet\Bilet\obj\Debug\Bilet.TiyatroForm.resources
 C:\Users\erayd\source\repos\Bilet\Bilet\obj\Debug\Bilet.GirisForm.resources
 C:\Users\erayd\source\repos\Bilet\Bilet\obj\Debug\Bilet.sifreUnuttumForm.resources
