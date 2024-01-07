@@ -116,7 +116,7 @@ namespace Bilet
                     if (macID == 9 || macID == 13 || macID == 15 || macID == 20)
                     {
                         // Use derbisorgu for specific macID values
-                        sorgu = "SELECT d.tribunid, tribunler.tribunad, d.biletfiyati " +
+                        sorgu = "SELECT d.tribunid,tribunler.tribunad, d.biletfiyati " +
                                 "FROM derbi_tribunler d " +
                                 "JOIN tribunler ON d.tribunid = tribunler.tribunid " +
                                 "WHERE d.evsahibiid = @macID";
@@ -124,7 +124,7 @@ namespace Bilet
                     else
                     {
                         // Use the default sorgu for other macID values
-                        sorgu = "SELECT tribunler.tribunid, tribunler.tribunad, biletfiyatlari.biletfiyati " +
+                        sorgu = "SELECT tribunler.tribunid,tribunler.tribunad, biletfiyatlari.biletfiyati " +
                                 "FROM biletfiyatlari " +
                                 "JOIN takimlar ON biletfiyatlari.takimid = takimlar.takimid " +
                                 "JOIN tribunler ON biletfiyatlari.tribunid = tribunler.tribunid " +
@@ -198,7 +198,7 @@ namespace Bilet
             baglanti.Open();
 
             // Kullanıcının belirli tribündeki bilet bilgilerini sorgula
-            NpgsqlCommand comut = new NpgsqlCommand("SELECT b.eposta, t.tribunad, b.biletsayisi,m.evsahibi,u.bakiye\r\nFROM biletalanlar b\r\nJOIN tribunler t ON b.tribunid = t.tribunid\r\nJOIN maclar m ON b.macid = m.macid\r\nJOIN users u ON b.kullaniciid = u.kullaniciid ", baglanti);
+            NpgsqlCommand comut = new NpgsqlCommand("SELECT m.macid,b.eposta,t.tribunid,t.tribunad, b.biletsayisi,m.evsahibi\r\nFROM biletalanlar b\r\nJOIN tribunler t ON b.tribunid = t.tribunid\r\nJOIN maclar m ON b.macid = m.macid", baglanti);
 
             NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(comut);
             DataTable dataTable = new DataTable();

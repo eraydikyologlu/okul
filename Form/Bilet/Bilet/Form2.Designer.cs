@@ -182,7 +182,7 @@
             // BiletSilBtn
             // 
             this.BiletSilBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.BiletSilBtn.Location = new System.Drawing.Point(860, 384);
+            this.BiletSilBtn.Location = new System.Drawing.Point(974, 386);
             this.BiletSilBtn.Name = "BiletSilBtn";
             this.BiletSilBtn.Size = new System.Drawing.Size(212, 32);
             this.BiletSilBtn.TabIndex = 21;
