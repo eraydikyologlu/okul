@@ -238,8 +238,11 @@ namespace Bilet
         private int GetBiletFiyati(int tribunid)
         {
             // Tribun fiyatını al
-            NpgsqlCommand getPriceKomut = new NpgsqlCommand("SELECT biletfiyati FROM biletfiyatlari WHERE tribunid = @tribunid LIMIT 1", baglanti);
+            int macid = int.Parse(macIDcomboBox1.Text);
+            NpgsqlCommand getPriceKomut = new NpgsqlCommand("SELECT biletfiyati FROM biletfiyatlari WHERE tribunid = @tribunid AND takimid = @takimid LIMIT 1", baglanti);
             getPriceKomut.Parameters.AddWithValue("@tribunid", tribunid);
+            getPriceKomut.Parameters.AddWithValue("@takimid", macid);
+
 
             object result = getPriceKomut.ExecuteScalar();
             return result != DBNull.Value ? Convert.ToInt32(result) : 0;
@@ -471,33 +474,33 @@ namespace Bilet
 
         private void BiletIadebutton_Click(object sender, EventArgs e)
         {
-
             int tribunid = int.Parse(TribunIDcomboBox1.Text);
             int macid = int.Parse(macIDcomboBox1.Text);
-            
-            
+
             baglanti.Open();
 
             if (string.IsNullOrEmpty(BiletSayisitextBox1.Text) || !int.TryParse(BiletSayisitextBox1.Text, out int biletSayisiToDelete))
             {
                 MessageBox.Show("Geçerli bir bilet sayısı giriniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                baglanti.Close();
                 return;
             }
 
             // Kullanıcının belirli tribundaki bileti var mı kontrol et
-            NpgsqlCommand kontrolKomut = new NpgsqlCommand("SELECT COUNT(*) FROM biletalanlar WHERE kullaniciid = @kullaniciID AND tribunid = @tribunid AND macid = @macid", baglanti);
+            NpgsqlCommand kontrolKomut = new NpgsqlCommand("SELECT biletsayisi FROM biletalanlar WHERE kullaniciid = @kullaniciID AND tribunid = @tribunid AND macid = @macid", baglanti);
             kontrolKomut.Parameters.AddWithValue("@kullaniciID", kullaniciId);
             kontrolKomut.Parameters.AddWithValue("@tribunid", tribunid);
             kontrolKomut.Parameters.AddWithValue("@macid", macid);
 
-            int biletSayisi = Convert.ToInt32(kontrolKomut.ExecuteScalar());
-            if (biletSayisi >= biletSayisiToDelete)
-            {
+            int mevcutBiletSayisi = Convert.ToInt32(kontrolKomut.ExecuteScalar());
 
+            if (mevcutBiletSayisi >= biletSayisiToDelete)
+            {
                 int kalanBakiye = GetKalanBakiye();
 
                 // Bilet varsa silme işlemi gerçekleştir
-                NpgsqlCommand silKomut = new NpgsqlCommand($"DELETE FROM biletalanlar WHERE (kullaniciid, tribunid, macid) IN (SELECT kullaniciid, tribunid, macid FROM biletalanlar WHERE kullaniciid = @kullaniciID AND tribunid = @tribunid AND macid = @macid ORDER BY RANDOM() LIMIT @biletSayisiToDelete)", baglanti);
+                NpgsqlCommand silKomut = new NpgsqlCommand("UPDATE biletalanlar SET biletsayisi = biletsayisi - @biletSayisiToDelete " +
+                                                            "WHERE kullaniciid = @kullaniciid AND tribunid = @tribunid AND macid = @macid", baglanti);
                 silKomut.Parameters.AddWithValue("@biletSayisiToDelete", biletSayisiToDelete);
                 silKomut.Parameters.AddWithValue("@kullaniciID", kullaniciId);
                 silKomut.Parameters.AddWithValue("@tribunid", tribunid);
@@ -506,26 +509,42 @@ namespace Bilet
                 int silinenBiletSayisi = silKomut.ExecuteNonQuery();
 
                 // İade işlemini gerçekleştir
-                int ticketPrice = GetBiletFiyati(tribunid); // Tribun fiyatını al
-                int refundAmount = silinenBiletSayisi * ticketPrice;
+                if (biletSayisiToDelete > 0)
+                {
+                    // İade işlemini gerçekleştir
+                    int ticketPrice = GetBiletFiyati(tribunid); // Tribun fiyatını al
+                    int refundAmount = biletSayisiToDelete * ticketPrice;
 
-                // Kullanıcının bakiyesini güncelle
-                NpgsqlCommand updateBakiyeKomut = new NpgsqlCommand("UPDATE users SET bakiye = bakiye + @refundAmount WHERE kullaniciid = @kullaniciId", baglanti);
-                updateBakiyeKomut.Parameters.AddWithValue("@refundAmount", refundAmount);
-                updateBakiyeKomut.Parameters.AddWithValue("@kullaniciId", kullaniciId);
-                updateBakiyeKomut.ExecuteNonQuery();
-                mevcutbakiyelabel.Text = "Mevcut Bakiye: " + (kalanBakiye + refundAmount).ToString() + " TL";
+                    // Kullanıcının bakiyesini güncelle
+                    using (NpgsqlCommand updateBakiyeKomut = new NpgsqlCommand("UPDATE users SET bakiye = bakiye + @refundAmount WHERE kullaniciid = @kullaniciId", baglanti))
+                    {
+                        updateBakiyeKomut.Parameters.AddWithValue("@refundAmount", refundAmount);
+                        updateBakiyeKomut.Parameters.AddWithValue("@kullaniciId", kullaniciId);
+                        updateBakiyeKomut.ExecuteNonQuery();
+                    }
 
-                MessageBox.Show($"{silinenBiletSayisi} bilet başarıyla iade edildi. İade miktarı: {refundAmount} TL", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    mevcutbakiyelabel.Text = "Mevcut Bakiye: " + (kalanBakiye + refundAmount).ToString() + " TL";
+                    NpgsqlCommand temizleKomut = new NpgsqlCommand("DELETE FROM biletalanlar WHERE biletsayisi = 0 AND kullaniciid = @kullaniciid", baglanti);
+                    temizleKomut.Parameters.AddWithValue("@kullaniciid", kullaniciId);
+
+                    temizleKomut.ExecuteNonQuery();
+                    MessageBox.Show($"{biletSayisiToDelete} bilet başarıyla iade edildi. İade miktarı: {refundAmount} TL", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    // Bilet yoksa hata mesajı göster
+                    MessageBox.Show($"Kullanıcının belirtilen tribünde yeterli bilet bulunamadığı için iade işlemi gerçekleştirilemedi.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
                 // Bilet yoksa hata mesajı göster
-                MessageBox.Show($"Kullanıcının belirtilen tribünde {biletSayisi} bilet bulunamadığı için silme işlemi gerçekleştirilemedi.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Kullanıcının belirtilen tribünde yeterli bilet bulunamadığı için iade işlemi gerçekleştirilemedi.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             baglanti.Close();
         }
+
 
         private void BiletSatınAl_Click_1(object sender, EventArgs e)
         {
