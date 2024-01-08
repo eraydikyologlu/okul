@@ -235,10 +235,6 @@ namespace Bilet
         }
 
 
-
-        
-
-
         private int GetBiletFiyati(int tribunid)
         {
             // Tribun fiyatını al
@@ -344,9 +340,6 @@ namespace Bilet
         }
 
 
-
-       
-
         private int GetKalanBakiye()
         {
             string connectionString = "server=localhost;port=5432;Database=passo;user ID=postgres;password=admin";
@@ -400,8 +393,8 @@ namespace Bilet
             string kartNumarasi = KartNumarasiTextBox.Text;
             string kartSahibi = KartSahibiTextBox.Text;
             string cvc = CVCTextBox.Text;
-            tanimlananbakiyelabel.Text = "Tanımlanan Bakiye: " + BakiyeYukletextBox.Text +" TL";
-            mevcutbakiyelabel.Text = "Mevcut Bakiye: " + BakiyeYukletextBox.Text + " TL";
+            int kalanBakiye = GetKalanBakiye();
+            
 
             if (kartNumarasi.Length != 12)
             {
@@ -416,7 +409,7 @@ namespace Bilet
             }
 
             string[] kartSahibiParts = kartSahibi.Split(' ');
-            if (kartSahibiParts.Length != 3)
+            if (kartSahibiParts.Length > 3)
             {
                 MessageBox.Show("Kart sahibi ismi geçerli değil. Lütfen ad ve soyadı ayrı ayrı girin.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -443,6 +436,9 @@ namespace Bilet
                 return;
             }
 
+            tanimlananbakiyelabel.Text = "Tanımlanan Bakiye: " + enteredBakiye.ToString() + " TL";
+
+
 
             string connectionString = "server=localhost;port=5432;Database=passo;user ID = postgres; password=admin";
             int girilenBakiye = int.Parse(BakiyeYukletextBox.Text);
@@ -456,17 +452,18 @@ namespace Bilet
                 int userId = Convert.ToInt32(getUserIdCommand.ExecuteScalar());
 
                 // Update the bakiye column for the user
-                NpgsqlCommand updateBakiyeCommand = new NpgsqlCommand("UPDATE users SET bakiye = @EnteredBakiye WHERE kullaniciid = @UserId", connection);
+                NpgsqlCommand updateBakiyeCommand = new NpgsqlCommand("UPDATE users SET bakiye = bakiye + @EnteredBakiye WHERE kullaniciid = @UserId", connection);
                 updateBakiyeCommand.Parameters.AddWithValue("@EnteredBakiye", girilenBakiye);
                 updateBakiyeCommand.Parameters.AddWithValue("@UserId", userId);
                 updateBakiyeCommand.ExecuteNonQuery();
 
                 connection.Close();
+                
             }
 
             // If all validations pass, you can proceed with saving the card details or any other necessary actions.
             // ...
-
+            mevcutbakiyelabel.Text = "Mevcut Bakiye: " + (kalanBakiye + girilenBakiye).ToString() + " TL";
             MessageBox.Show("Bakiye tanımlama başarılı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
             
 
@@ -477,9 +474,15 @@ namespace Bilet
 
             int tribunid = int.Parse(TribunIDcomboBox1.Text);
             int macid = int.Parse(macIDcomboBox1.Text);
-            int biletSayisiToDelete = int.Parse(BiletSayisitextBox1.Text);
+            
             
             baglanti.Open();
+
+            if (string.IsNullOrEmpty(BiletSayisitextBox1.Text) || !int.TryParse(BiletSayisitextBox1.Text, out int biletSayisiToDelete))
+            {
+                MessageBox.Show("Geçerli bir bilet sayısı giriniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             // Kullanıcının belirli tribundaki bileti var mı kontrol et
             NpgsqlCommand kontrolKomut = new NpgsqlCommand("SELECT COUNT(*) FROM biletalanlar WHERE kullaniciid = @kullaniciID AND tribunid = @tribunid AND macid = @macid", baglanti);
@@ -488,31 +491,32 @@ namespace Bilet
             kontrolKomut.Parameters.AddWithValue("@macid", macid);
 
             int biletSayisi = Convert.ToInt32(kontrolKomut.ExecuteScalar());
-
             if (biletSayisi >= biletSayisiToDelete)
             {
+
+                int kalanBakiye = GetKalanBakiye();
+
                 // Bilet varsa silme işlemi gerçekleştir
                 NpgsqlCommand silKomut = new NpgsqlCommand($"DELETE FROM biletalanlar WHERE (kullaniciid, tribunid, macid) IN (SELECT kullaniciid, tribunid, macid FROM biletalanlar WHERE kullaniciid = @kullaniciID AND tribunid = @tribunid AND macid = @macid ORDER BY RANDOM() LIMIT @biletSayisiToDelete)", baglanti);
+                silKomut.Parameters.AddWithValue("@biletSayisiToDelete", biletSayisiToDelete);
                 silKomut.Parameters.AddWithValue("@kullaniciID", kullaniciId);
                 silKomut.Parameters.AddWithValue("@tribunid", tribunid);
                 silKomut.Parameters.AddWithValue("@macid", macid);
-                silKomut.Parameters.AddWithValue("@biletSayisiToDelete", biletSayisiToDelete);
 
-                silKomut.ExecuteNonQuery();
-                MessageBox.Show($"{biletSayisiToDelete} bilet silme işlemi başarılı bir şekilde gerçekleşti.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                int silinenBiletSayisi = silKomut.ExecuteNonQuery();
 
                 // İade işlemini gerçekleştir
                 int ticketPrice = GetBiletFiyati(tribunid); // Tribun fiyatını al
-                int refundAmount = biletSayisiToDelete * ticketPrice;
+                int refundAmount = silinenBiletSayisi * ticketPrice;
 
                 // Kullanıcının bakiyesini güncelle
                 NpgsqlCommand updateBakiyeKomut = new NpgsqlCommand("UPDATE users SET bakiye = bakiye + @refundAmount WHERE kullaniciid = @kullaniciId", baglanti);
                 updateBakiyeKomut.Parameters.AddWithValue("@refundAmount", refundAmount);
                 updateBakiyeKomut.Parameters.AddWithValue("@kullaniciId", kullaniciId);
                 updateBakiyeKomut.ExecuteNonQuery();
-                mevcutbakiyelabel.Text = "Mevcut Bakiye: " + BakiyeYukletextBox.Text + " TL";
+                mevcutbakiyelabel.Text = "Mevcut Bakiye: " + (kalanBakiye + refundAmount).ToString() + " TL";
 
-                MessageBox.Show($"Bakiye iade işlemi başarılı bir şekilde gerçekleşti. İade miktarı: {refundAmount}", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"{silinenBiletSayisi} bilet başarıyla iade edildi. İade miktarı: {refundAmount} TL", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
@@ -521,8 +525,6 @@ namespace Bilet
             }
 
             baglanti.Close();
-            
-
         }
 
         private void BiletSatınAl_Click_1(object sender, EventArgs e)
@@ -562,8 +564,9 @@ namespace Bilet
 
                                 int alinanBiletSayisi = Convert.ToInt32(kontrolCommand.ExecuteScalar());
 
+
                                 // Toplam bilet sayısını kontrol et
-                                if (alinanBiletSayisi + biletsayisi > 3)
+                                if (alinanBiletSayisi > 3 || biletsayisi > 3)
                                 {
                                     MessageBox.Show("Toplam bilet sayısı 3'ten fazla olamaz!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     return;
@@ -587,31 +590,69 @@ namespace Bilet
                                     return;
                                 }
 
+                                // Toplam bilet sayısını kontrol et
                                 if (alinanBiletSayisi > 0)
                                 {
+                                    
+                                    // Calculate the difference in ticket count
+                                    int ticketCountDifference = yeniBiletSayisi - alinanBiletSayisi;
+
+                                    if (ticketCountDifference > 0)
+                                    {
+                                        // If increasing the ticket count, deduct the corresponding amount from the user's balance
+                                        int ticketPrice = GetBiletFiyati(tribunid);
+                                        int deductionAmount = ticketCountDifference * ticketPrice;
+
+                                        if (deductionAmount > GetKalanBakiye())
+                                        {
+                                            MessageBox.Show("Yetersiz bakiye! Bilet sayısını azaltın veya bakiyenizi artırın.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                            return;
+                                        }
+
+                                        // Update the user's balance
+                                        NpgsqlCommand updateBakiyeKomut = new NpgsqlCommand("UPDATE users SET bakiye = bakiye - @deductionAmount WHERE kullaniciid = @kullaniciId", baglanti);
+                                        updateBakiyeKomut.Parameters.AddWithValue("@deductionAmount", deductionAmount);
+                                        updateBakiyeKomut.Parameters.AddWithValue("@kullaniciId", kullaniciId);
+                                        updateBakiyeKomut.ExecuteNonQuery();
+                                        mevcutbakiyelabel.Text = "Mevcut Bakiye: " + GetKalanBakiye().ToString();
+                                    }
+                                    else if (ticketCountDifference < 0)
+                                    {
+                                        // If decreasing the ticket count, add the corresponding amount to the user's balance
+                                        int ticketPrice = GetBiletFiyati(tribunid);
+                                        int additionAmount = Math.Abs(ticketCountDifference) * ticketPrice;
+
+                                        // Update the user's balance
+                                        NpgsqlCommand updateBakiyeKomut = new NpgsqlCommand("UPDATE users SET bakiye = bakiye + @additionAmount WHERE kullaniciid = @kullaniciId", baglanti);
+                                        updateBakiyeKomut.Parameters.AddWithValue("@additionAmount", additionAmount);
+                                        updateBakiyeKomut.Parameters.AddWithValue("@kullaniciId", kullaniciId);
+                                        updateBakiyeKomut.ExecuteNonQuery();
+                                        mevcutbakiyelabel.Text = "Mevcut Bakiye: " + GetKalanBakiye().ToString();
+                                    }
+
+                                    // Update the ticket count
                                     string guncelleSorgu = "UPDATE biletalanlar SET biletsayisi = @biletsayisi WHERE kullaniciid = @kullaniciid AND tribunid = @tribunid AND macid = @macid";
                                     using (NpgsqlCommand guncelleCommand = new NpgsqlCommand(guncelleSorgu, baglanti))
                                     {
                                         guncelleCommand.Parameters.AddWithValue("@kullaniciid", kullaniciId);
                                         guncelleCommand.Parameters.AddWithValue("@tribunid", tribunid);
                                         guncelleCommand.Parameters.AddWithValue("@macid", macid);
-                                        guncelleCommand.Parameters.AddWithValue("@biletsayisi", biletsayisi);
+                                        guncelleCommand.Parameters.AddWithValue("@biletsayisi", yeniBiletSayisi);
                                         guncelleCommand.ExecuteNonQuery();
                                     }
-                                    int kalanBakiye = GetKalanBakiye();
-                                    //bakiyeLabel.Text = "Kalan Bakiye: " + kalanBakiye.ToString() + " TL";
-                                    mevcutbakiyelabel.Text = "Mevcut Bakiye: " + kalanBakiye.ToString();
+
                                     MessageBox.Show("Bilet sayısı güncellendi!");
-
-                                    // Eğer aynı kombinasyon ile kayıt varsa, güncelleme yap
-
                                 }
 
-
-                                
+                                if (alinanBiletSayisi + biletsayisi > 3)
+                                {
+                                    
+                                    return;
+                                }
 
                                 if (alinanBiletSayisi < 1)
                                 {
+                                    
                                     string ekleSorgu = "INSERT INTO biletalanlar (kullaniciid, eposta, tribunid, biletsayisi, macid) VALUES (@kullaniciid, @eposta, @tribunID, @biletsayisi, @macid)";
                                     using (NpgsqlCommand kmt2 = new NpgsqlCommand(ekleSorgu, baglanti))
                                     {
@@ -630,26 +671,24 @@ namespace Bilet
                                     mevcutbakiyelabel.Text = "Mevcut Bakiye: " + kalanBakiye.ToString();
                                     MessageBox.Show("Bilet satın alındı!");
                                 }
-
-                                // Eğer aynı kombinasyon ile kayıt yoksa, yeni bir kayıt ekle
-
-
-
-
-
                             }
                         }
                     }
                 }
             }
+
             catch (Exception ex)
             {
-                MessageBox.Show("Bilet sayısı girmelisiniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Hata", ex.Message);
             }
             finally
             {
                 baglanti.Close();
             }
         }
+
+        
+        
+
     }
 }

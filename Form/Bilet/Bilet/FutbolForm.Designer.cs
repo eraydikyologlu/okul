@@ -237,7 +237,7 @@
             // 
             this.labelTakimIsmi.AutoSize = true;
             this.labelTakimIsmi.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.labelTakimIsmi.Location = new System.Drawing.Point(1065, 435);
+            this.labelTakimIsmi.Location = new System.Drawing.Point(1146, 499);
             this.labelTakimIsmi.Name = "labelTakimIsmi";
             this.labelTakimIsmi.Size = new System.Drawing.Size(0, 38);
             this.labelTakimIsmi.TabIndex = 32;
@@ -352,7 +352,7 @@
             // BiletIadebutton
             // 
             this.BiletIadebutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.BiletIadebutton.Location = new System.Drawing.Point(965, 407);
+            this.BiletIadebutton.Location = new System.Drawing.Point(862, 377);
             this.BiletIadebutton.Name = "BiletIadebutton";
             this.BiletIadebutton.Size = new System.Drawing.Size(212, 51);
             this.BiletIadebutton.TabIndex = 46;
@@ -375,7 +375,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1434, 733);
+            this.ClientSize = new System.Drawing.Size(1434, 677);
             this.Controls.Add(this.BiletSatınAl);
             this.Controls.Add(this.BiletIadebutton);
             this.Controls.Add(this.mevcutbakiyelabel);
