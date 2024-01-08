@@ -44,6 +44,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.label1.Location = new System.Drawing.Point(256, 120);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(54, 16);
@@ -56,6 +57,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.label2.Location = new System.Drawing.Point(259, 179);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(34, 16);
@@ -86,7 +88,7 @@
             // 
             // BtnGiris
             // 
-            this.BtnGiris.Location = new System.Drawing.Point(280, 262);
+            this.BtnGiris.Location = new System.Drawing.Point(385, 262);
             this.BtnGiris.Name = "BtnGiris";
             this.BtnGiris.Size = new System.Drawing.Size(157, 57);
             this.BtnGiris.TabIndex = 4;
@@ -96,7 +98,7 @@
             // 
             // BtnKayıt
             // 
-            this.BtnKayıt.Location = new System.Drawing.Point(524, 262);
+            this.BtnKayıt.Location = new System.Drawing.Point(671, 262);
             this.BtnKayıt.Name = "BtnKayıt";
             this.BtnKayıt.Size = new System.Drawing.Size(136, 57);
             this.BtnKayıt.TabIndex = 5;
@@ -107,6 +109,8 @@
             // sifreunuttumLabel
             // 
             this.sifreunuttumLabel.AutoSize = true;
+            this.sifreunuttumLabel.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.sifreunuttumLabel.LinkColor = System.Drawing.Color.Blue;
             this.sifreunuttumLabel.Location = new System.Drawing.Point(502, 214);
             this.sifreunuttumLabel.Name = "sifreunuttumLabel";
             this.sifreunuttumLabel.Size = new System.Drawing.Size(96, 16);
@@ -132,6 +136,7 @@
             this.Name = "GirisForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Giriş Sayfası";
+            this.Load += new System.EventHandler(this.GirisForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

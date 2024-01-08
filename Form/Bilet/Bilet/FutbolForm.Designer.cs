@@ -66,6 +66,7 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(7, 9);
             this.dataGridView1.Name = "dataGridView1";
@@ -86,32 +87,34 @@
             // 
             // BtnMacListele
             // 
+            this.BtnMacListele.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.BtnMacListele.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.BtnMacListele.Location = new System.Drawing.Point(1131, 258);
+            this.BtnMacListele.Location = new System.Drawing.Point(1118, 258);
             this.BtnMacListele.Name = "BtnMacListele";
-            this.BtnMacListele.Size = new System.Drawing.Size(215, 35);
+            this.BtnMacListele.Size = new System.Drawing.Size(215, 44);
             this.BtnMacListele.TabIndex = 6;
             this.BtnMacListele.Text = "Tribün Listele";
-            this.BtnMacListele.UseVisualStyleBackColor = true;
+            this.BtnMacListele.UseVisualStyleBackColor = false;
             this.BtnMacListele.Click += new System.EventHandler(this.BtnTribunListele_Click);
             // 
             // TribunIDcomboBox1
             // 
             this.TribunIDcomboBox1.FormattingEnabled = true;
-            this.TribunIDcomboBox1.Location = new System.Drawing.Point(1206, 52);
+            this.TribunIDcomboBox1.Location = new System.Drawing.Point(1241, 52);
             this.TribunIDcomboBox1.Name = "TribunIDcomboBox1";
             this.TribunIDcomboBox1.Size = new System.Drawing.Size(109, 24);
             this.TribunIDcomboBox1.TabIndex = 7;
             // 
             // BtnBilgileriGöster
             // 
+            this.BtnBilgileriGöster.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.BtnBilgileriGöster.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.BtnBilgileriGöster.Location = new System.Drawing.Point(1124, 321);
+            this.BtnBilgileriGöster.Location = new System.Drawing.Point(1124, 327);
             this.BtnBilgileriGöster.Name = "BtnBilgileriGöster";
-            this.BtnBilgileriGöster.Size = new System.Drawing.Size(215, 40);
+            this.BtnBilgileriGöster.Size = new System.Drawing.Size(215, 44);
             this.BtnBilgileriGöster.TabIndex = 10;
             this.BtnBilgileriGöster.Text = "Bilgilerimi Göster";
-            this.BtnBilgileriGöster.UseVisualStyleBackColor = true;
+            this.BtnBilgileriGöster.UseVisualStyleBackColor = false;
             this.BtnBilgileriGöster.Click += new System.EventHandler(this.BtnBilgileriGöster_Click);
             // 
             // labelBlok
@@ -151,13 +154,14 @@
             // 
             // button1
             // 
+            this.button1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.button1.Location = new System.Drawing.Point(862, 265);
+            this.button1.Location = new System.Drawing.Point(1007, 185);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(212, 37);
+            this.button1.Size = new System.Drawing.Size(215, 44);
             this.button1.TabIndex = 18;
             this.button1.Text = "Maçları Listele";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // macIDcomboBox1
@@ -192,12 +196,12 @@
             // 
             this.BiletSayisitextBox1.Location = new System.Drawing.Point(965, 132);
             this.BiletSayisitextBox1.Name = "BiletSayisitextBox1";
-            this.BiletSayisitextBox1.Size = new System.Drawing.Size(100, 22);
+            this.BiletSayisitextBox1.Size = new System.Drawing.Size(129, 22);
             this.BiletSayisitextBox1.TabIndex = 25;
             // 
             // textBox1Arama
             // 
-            this.textBox1Arama.Location = new System.Drawing.Point(1186, 122);
+            this.textBox1Arama.Location = new System.Drawing.Point(1210, 131);
             this.textBox1Arama.Name = "textBox1Arama";
             this.textBox1Arama.Size = new System.Drawing.Size(129, 22);
             this.textBox1Arama.TabIndex = 27;
@@ -207,7 +211,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.Location = new System.Drawing.Point(1113, 119);
+            this.label1.Location = new System.Drawing.Point(1136, 132);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(43, 25);
             this.label1.TabIndex = 28;
@@ -215,20 +219,21 @@
             // 
             // DerbiGosterBtn
             // 
+            this.DerbiGosterBtn.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.DerbiGosterBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.DerbiGosterBtn.Location = new System.Drawing.Point(1166, 174);
+            this.DerbiGosterBtn.Location = new System.Drawing.Point(859, 258);
             this.DerbiGosterBtn.Name = "DerbiGosterBtn";
-            this.DerbiGosterBtn.Size = new System.Drawing.Size(173, 40);
+            this.DerbiGosterBtn.Size = new System.Drawing.Size(215, 44);
             this.DerbiGosterBtn.TabIndex = 30;
             this.DerbiGosterBtn.Text = "Derbileri Göster";
-            this.DerbiGosterBtn.UseVisualStyleBackColor = true;
+            this.DerbiGosterBtn.UseVisualStyleBackColor = false;
             this.DerbiGosterBtn.Click += new System.EventHandler(this.DerbiGosterBtn_Click);
             // 
             // labelSecilenTakim
             // 
             this.labelSecilenTakim.AutoSize = true;
             this.labelSecilenTakim.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.labelSecilenTakim.Location = new System.Drawing.Point(778, 512);
+            this.labelSecilenTakim.Location = new System.Drawing.Point(859, 515);
             this.labelSecilenTakim.Name = "labelSecilenTakim";
             this.labelSecilenTakim.Size = new System.Drawing.Size(0, 38);
             this.labelSecilenTakim.TabIndex = 31;
@@ -237,20 +242,21 @@
             // 
             this.labelTakimIsmi.AutoSize = true;
             this.labelTakimIsmi.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.labelTakimIsmi.Location = new System.Drawing.Point(1146, 499);
+            this.labelTakimIsmi.Location = new System.Drawing.Point(1179, 515);
             this.labelTakimIsmi.Name = "labelTakimIsmi";
             this.labelTakimIsmi.Size = new System.Drawing.Size(0, 38);
             this.labelTakimIsmi.TabIndex = 32;
             // 
             // BtnBakiyeTanımla
             // 
+            this.BtnBakiyeTanımla.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.BtnBakiyeTanımla.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.BtnBakiyeTanımla.Location = new System.Drawing.Point(457, 499);
             this.BtnBakiyeTanımla.Name = "BtnBakiyeTanımla";
             this.BtnBakiyeTanımla.Size = new System.Drawing.Size(167, 38);
             this.BtnBakiyeTanımla.TabIndex = 33;
             this.BtnBakiyeTanımla.Text = "Tanımla";
-            this.BtnBakiyeTanımla.UseVisualStyleBackColor = true;
+            this.BtnBakiyeTanımla.UseVisualStyleBackColor = false;
             this.BtnBakiyeTanımla.Click += new System.EventHandler(this.BtnBakiyeTanımla_Click);
             // 
             // label3
@@ -351,30 +357,33 @@
             // 
             // BiletIadebutton
             // 
+            this.BiletIadebutton.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.BiletIadebutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.BiletIadebutton.Location = new System.Drawing.Point(862, 377);
+            this.BiletIadebutton.Location = new System.Drawing.Point(1007, 414);
             this.BiletIadebutton.Name = "BiletIadebutton";
-            this.BiletIadebutton.Size = new System.Drawing.Size(212, 51);
+            this.BiletIadebutton.Size = new System.Drawing.Size(215, 44);
             this.BiletIadebutton.TabIndex = 46;
             this.BiletIadebutton.Text = "Bileti İade Et";
-            this.BiletIadebutton.UseVisualStyleBackColor = true;
+            this.BiletIadebutton.UseVisualStyleBackColor = false;
             this.BiletIadebutton.Click += new System.EventHandler(this.BiletIadebutton_Click);
             // 
             // BiletSatınAl
             // 
+            this.BiletSatınAl.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.BiletSatınAl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.BiletSatınAl.Location = new System.Drawing.Point(862, 330);
+            this.BiletSatınAl.Location = new System.Drawing.Point(862, 327);
             this.BiletSatınAl.Name = "BiletSatınAl";
-            this.BiletSatınAl.Size = new System.Drawing.Size(203, 31);
+            this.BiletSatınAl.Size = new System.Drawing.Size(215, 44);
             this.BiletSatınAl.TabIndex = 47;
             this.BiletSatınAl.Text = "Bilet Satın Al";
-            this.BiletSatınAl.UseVisualStyleBackColor = true;
+            this.BiletSatınAl.UseVisualStyleBackColor = false;
             this.BiletSatınAl.Click += new System.EventHandler(this.BiletSatınAl_Click_1);
             // 
             // FutbolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(1434, 677);
             this.Controls.Add(this.BiletSatınAl);
             this.Controls.Add(this.BiletIadebutton);

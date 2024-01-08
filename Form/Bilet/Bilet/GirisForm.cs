@@ -195,6 +195,11 @@ namespace Bilet
         {
 
         }
+
+        private void GirisForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 
