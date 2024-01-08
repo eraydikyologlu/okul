@@ -112,6 +112,12 @@
     <Compile Include="GirisForm.Designer.cs">
       <DependentUpon>GirisForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="KayıtFormu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KayıtFormu.Designer.cs">
+      <DependentUpon>KayıtFormu.cs</DependentUpon>
+    </Compile>
     <Compile Include="SifreUnuttumForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -129,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GirisForm.resx">
       <DependentUpon>GirisForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KayıtFormu.resx">
+      <DependentUpon>KayıtFormu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SifreUnuttumForm.resx">
       <DependentUpon>SifreUnuttumForm.cs</DependentUpon>

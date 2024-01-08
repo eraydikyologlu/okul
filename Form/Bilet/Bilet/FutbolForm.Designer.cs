@@ -89,9 +89,9 @@
             // 
             this.BtnMacListele.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.BtnMacListele.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.BtnMacListele.Location = new System.Drawing.Point(1118, 258);
+            this.BtnMacListele.Location = new System.Drawing.Point(1123, 258);
             this.BtnMacListele.Name = "BtnMacListele";
-            this.BtnMacListele.Size = new System.Drawing.Size(215, 44);
+            this.BtnMacListele.Size = new System.Drawing.Size(210, 44);
             this.BtnMacListele.TabIndex = 6;
             this.BtnMacListele.Text = "Tribün Listele";
             this.BtnMacListele.UseVisualStyleBackColor = false;
@@ -156,7 +156,7 @@
             // 
             this.button1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.button1.Location = new System.Drawing.Point(1007, 185);
+            this.button1.Location = new System.Drawing.Point(1118, 194);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(215, 44);
             this.button1.TabIndex = 18;

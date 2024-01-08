@@ -29,3 +29,4 @@ C:\Users\erayd\source\repos\Bilet\Bilet\obj\Debug\Bilet.csproj.CopyComplete
 C:\Users\erayd\source\repos\Bilet\Bilet\obj\Debug\Bilet.FutbolForm.resources
 C:\Users\erayd\source\repos\Bilet\Bilet\obj\Debug\Bilet.GirisForm.resources
 C:\Users\erayd\source\repos\Bilet\Bilet\obj\Debug\Bilet.sifreUnuttumForm.resources
+C:\Users\erayd\source\repos\Bilet\Bilet\obj\Debug\Bilet.KayıtFormu.resources

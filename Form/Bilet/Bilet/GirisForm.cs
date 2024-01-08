@@ -132,55 +132,10 @@ namespace Bilet
 
         private void BtnKayıt_Click(object sender, EventArgs e)
         {
-            Eposta = ePostaTextBox1.Text;
-            string sifre = SifretextBox2.Text;
-            baglanti.Open();
-
-            if (!string.IsNullOrEmpty(Eposta) && !string.IsNullOrEmpty(sifre))
-            {
-                if (!IsValidEmail(Eposta))
-                {
-                    MessageBox.Show("Geçersiz e-posta adresi! Lütfen gmail veya outlook kullanın.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else if (ContainsTurkishCharacters(sifre))
-                {
-                    MessageBox.Show("Şifre Türkçe karakter içermemelidir.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else if (ContainsTurkishCharacters(Eposta))
-                {
-                    MessageBox.Show("E-posta Türkçe karakter içermemelidir.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    // E-posta adresini kontrol et
-                    NpgsqlCommand checkCommand = new NpgsqlCommand("SELECT COUNT(*) FROM users WHERE Eposta = @Eposta", baglanti);
-                    checkCommand.Parameters.AddWithValue("@Eposta", Eposta);
-
-                    int existingCount = Convert.ToInt32(checkCommand.ExecuteScalar());
-
-                    if (existingCount > 0)
-                    {
-                        MessageBox.Show("Bu e-posta adresi zaten kullanımda.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                    {
-                        // E-posta adresi veritabanında yoksa kaydı yap
-                        NpgsqlCommand insertCommand = new NpgsqlCommand("INSERT INTO users (Eposta, sifre, bakiye) VALUES (@Eposta, @sifre, @bakiye)", baglanti);
-                        insertCommand.Parameters.AddWithValue("@Eposta", Eposta);
-                        insertCommand.Parameters.AddWithValue("@sifre", sifre);
-                        insertCommand.Parameters.AddWithValue("@bakiye", 0); // Set default bakiye to 0
-
-                        insertCommand.ExecuteNonQuery();
-                        MessageBox.Show("Kullanıcı kaydı başarılı bir şekilde gerçekleşti.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("E-posta veya şifre boş kalamaz!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            baglanti.Close();
+            
+            
+            KayıtFormu kayıt = new KayıtFormu();
+            kayıt.ShowDialog();
         }
 
 
