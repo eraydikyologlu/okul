@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GirisForm));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.ePostaTextBox1 = new System.Windows.Forms.TextBox();
@@ -39,6 +40,9 @@
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(256, 120);
             this.label1.Name = "label1";
@@ -48,6 +52,9 @@
             // 
             // label2
             // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(259, 179);
             this.label2.Name = "label2";
@@ -57,17 +64,23 @@
             // 
             // ePostaTextBox1
             // 
+            this.ePostaTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ePostaTextBox1.Location = new System.Drawing.Point(385, 114);
             this.ePostaTextBox1.Name = "ePostaTextBox1";
-            this.ePostaTextBox1.Size = new System.Drawing.Size(201, 22);
+            this.ePostaTextBox1.Size = new System.Drawing.Size(422, 22);
             this.ePostaTextBox1.TabIndex = 2;
             this.ePostaTextBox1.TextChanged += new System.EventHandler(this.ePostaTextBox1_TextChanged);
             // 
             // SifretextBox2
             // 
+            this.SifretextBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.SifretextBox2.Location = new System.Drawing.Point(385, 179);
             this.SifretextBox2.Name = "SifretextBox2";
-            this.SifretextBox2.Size = new System.Drawing.Size(201, 22);
+            this.SifretextBox2.Size = new System.Drawing.Size(422, 22);
             this.SifretextBox2.TabIndex = 3;
             this.SifretextBox2.TextChanged += new System.EventHandler(this.SifretextBox2_TextChanged);
             // 
@@ -106,7 +119,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(1021, 614);
             this.Controls.Add(this.sifreunuttumLabel);
             this.Controls.Add(this.BtnKayıt);
             this.Controls.Add(this.BtnGiris);
@@ -115,6 +130,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "GirisForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Giriş Sayfası";
             this.ResumeLayout(false);
             this.PerformLayout();

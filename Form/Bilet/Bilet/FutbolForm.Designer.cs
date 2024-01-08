@@ -40,10 +40,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.macIDcomboBox1 = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.BiletSilBtn = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.BiletSayisitextBox1 = new System.Windows.Forms.TextBox();
-            this.BiletSatınAl = new System.Windows.Forms.Button();
             this.textBox1Arama = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.DerbiGosterBtn = new System.Windows.Forms.Button();
@@ -61,6 +59,8 @@
             this.BakiyeYukletextBox = new System.Windows.Forms.TextBox();
             this.tanimlananbakiyelabel = new System.Windows.Forms.Label();
             this.mevcutbakiyelabel = new System.Windows.Forms.Label();
+            this.BiletIadebutton = new System.Windows.Forms.Button();
+            this.BiletSatınAl = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,7 +71,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(822, 337);
+            this.dataGridView1.Size = new System.Drawing.Size(822, 399);
             this.dataGridView1.TabIndex = 0;
             // 
             // label2
@@ -178,17 +178,6 @@
             this.label5.TabIndex = 20;
             this.label5.Text = "Maç seç (ID)";
             // 
-            // BiletSilBtn
-            // 
-            this.BiletSilBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.BiletSilBtn.Location = new System.Drawing.Point(974, 386);
-            this.BiletSilBtn.Name = "BiletSilBtn";
-            this.BiletSilBtn.Size = new System.Drawing.Size(212, 32);
-            this.BiletSilBtn.TabIndex = 21;
-            this.BiletSilBtn.Text = "Bileti Sil";
-            this.BiletSilBtn.UseVisualStyleBackColor = true;
-            this.BiletSilBtn.Click += new System.EventHandler(this.BiletSilBtn_Click);
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -205,17 +194,6 @@
             this.BiletSayisitextBox1.Name = "BiletSayisitextBox1";
             this.BiletSayisitextBox1.Size = new System.Drawing.Size(100, 22);
             this.BiletSayisitextBox1.TabIndex = 25;
-            // 
-            // BiletSatınAl
-            // 
-            this.BiletSatınAl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.BiletSatınAl.Location = new System.Drawing.Point(865, 321);
-            this.BiletSatınAl.Name = "BiletSatınAl";
-            this.BiletSatınAl.Size = new System.Drawing.Size(209, 40);
-            this.BiletSatınAl.TabIndex = 26;
-            this.BiletSatınAl.Text = "Bilet Satın Al";
-            this.BiletSatınAl.UseVisualStyleBackColor = true;
-            this.BiletSatınAl.Click += new System.EventHandler(this.BiletSatınAl_Click);
             // 
             // textBox1Arama
             // 
@@ -250,7 +228,7 @@
             // 
             this.labelSecilenTakim.AutoSize = true;
             this.labelSecilenTakim.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.labelSecilenTakim.Location = new System.Drawing.Point(781, 435);
+            this.labelSecilenTakim.Location = new System.Drawing.Point(778, 512);
             this.labelSecilenTakim.Name = "labelSecilenTakim";
             this.labelSecilenTakim.Size = new System.Drawing.Size(0, 38);
             this.labelSecilenTakim.TabIndex = 31;
@@ -267,7 +245,7 @@
             // BtnBakiyeTanımla
             // 
             this.BtnBakiyeTanımla.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.BtnBakiyeTanımla.Location = new System.Drawing.Point(460, 422);
+            this.BtnBakiyeTanımla.Location = new System.Drawing.Point(457, 499);
             this.BtnBakiyeTanımla.Name = "BtnBakiyeTanımla";
             this.BtnBakiyeTanımla.Size = new System.Drawing.Size(167, 38);
             this.BtnBakiyeTanımla.TabIndex = 33;
@@ -279,7 +257,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label3.Location = new System.Drawing.Point(196, 349);
+            this.label3.Location = new System.Drawing.Point(193, 426);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(209, 32);
             this.label3.TabIndex = 34;
@@ -287,7 +265,7 @@
             // 
             // KartNumarasiTextBox
             // 
-            this.KartNumarasiTextBox.Location = new System.Drawing.Point(165, 394);
+            this.KartNumarasiTextBox.Location = new System.Drawing.Point(162, 471);
             this.KartNumarasiTextBox.Name = "KartNumarasiTextBox";
             this.KartNumarasiTextBox.Size = new System.Drawing.Size(227, 22);
             this.KartNumarasiTextBox.TabIndex = 35;
@@ -296,7 +274,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label7.Location = new System.Drawing.Point(12, 390);
+            this.label7.Location = new System.Drawing.Point(9, 467);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(147, 25);
             this.label7.TabIndex = 36;
@@ -306,7 +284,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label8.Location = new System.Drawing.Point(12, 435);
+            this.label8.Location = new System.Drawing.Point(9, 512);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(108, 25);
             this.label8.TabIndex = 37;
@@ -314,7 +292,7 @@
             // 
             // KartSahibiTextBox
             // 
-            this.KartSahibiTextBox.Location = new System.Drawing.Point(165, 438);
+            this.KartSahibiTextBox.Location = new System.Drawing.Point(162, 515);
             this.KartSahibiTextBox.Name = "KartSahibiTextBox";
             this.KartSahibiTextBox.Size = new System.Drawing.Size(227, 22);
             this.KartSahibiTextBox.TabIndex = 38;
@@ -323,7 +301,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label9.Location = new System.Drawing.Point(12, 475);
+            this.label9.Location = new System.Drawing.Point(9, 552);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(56, 25);
             this.label9.TabIndex = 39;
@@ -331,7 +309,7 @@
             // 
             // CVCTextBox
             // 
-            this.CVCTextBox.Location = new System.Drawing.Point(164, 475);
+            this.CVCTextBox.Location = new System.Drawing.Point(161, 552);
             this.CVCTextBox.Name = "CVCTextBox";
             this.CVCTextBox.Size = new System.Drawing.Size(115, 22);
             this.CVCTextBox.TabIndex = 40;
@@ -340,7 +318,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label10.Location = new System.Drawing.Point(411, 368);
+            this.label10.Location = new System.Drawing.Point(408, 445);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(131, 25);
             this.label10.TabIndex = 41;
@@ -348,7 +326,7 @@
             // 
             // BakiyeYukletextBox
             // 
-            this.BakiyeYukletextBox.Location = new System.Drawing.Point(548, 372);
+            this.BakiyeYukletextBox.Location = new System.Drawing.Point(545, 449);
             this.BakiyeYukletextBox.Name = "BakiyeYukletextBox";
             this.BakiyeYukletextBox.Size = new System.Drawing.Size(115, 22);
             this.BakiyeYukletextBox.TabIndex = 42;
@@ -357,7 +335,7 @@
             // 
             this.tanimlananbakiyelabel.AutoSize = true;
             this.tanimlananbakiyelabel.Font = new System.Drawing.Font("Microsoft Yi Baiti", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tanimlananbakiyelabel.Location = new System.Drawing.Point(456, 463);
+            this.tanimlananbakiyelabel.Location = new System.Drawing.Point(453, 540);
             this.tanimlananbakiyelabel.Name = "tanimlananbakiyelabel";
             this.tanimlananbakiyelabel.Size = new System.Drawing.Size(0, 23);
             this.tanimlananbakiyelabel.TabIndex = 44;
@@ -371,11 +349,35 @@
             this.mevcutbakiyelabel.Size = new System.Drawing.Size(0, 25);
             this.mevcutbakiyelabel.TabIndex = 45;
             // 
+            // BiletIadebutton
+            // 
+            this.BiletIadebutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.BiletIadebutton.Location = new System.Drawing.Point(965, 407);
+            this.BiletIadebutton.Name = "BiletIadebutton";
+            this.BiletIadebutton.Size = new System.Drawing.Size(212, 51);
+            this.BiletIadebutton.TabIndex = 46;
+            this.BiletIadebutton.Text = "Bileti İade Et";
+            this.BiletIadebutton.UseVisualStyleBackColor = true;
+            this.BiletIadebutton.Click += new System.EventHandler(this.BiletIadebutton_Click);
+            // 
+            // BiletSatınAl
+            // 
+            this.BiletSatınAl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.BiletSatınAl.Location = new System.Drawing.Point(862, 330);
+            this.BiletSatınAl.Name = "BiletSatınAl";
+            this.BiletSatınAl.Size = new System.Drawing.Size(203, 31);
+            this.BiletSatınAl.TabIndex = 47;
+            this.BiletSatınAl.Text = "Bilet Satın Al";
+            this.BiletSatınAl.UseVisualStyleBackColor = true;
+            this.BiletSatınAl.Click += new System.EventHandler(this.BiletSatınAl_Click_1);
+            // 
             // FutbolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1434, 549);
+            this.ClientSize = new System.Drawing.Size(1434, 733);
+            this.Controls.Add(this.BiletSatınAl);
+            this.Controls.Add(this.BiletIadebutton);
             this.Controls.Add(this.mevcutbakiyelabel);
             this.Controls.Add(this.tanimlananbakiyelabel);
             this.Controls.Add(this.BakiyeYukletextBox);
@@ -393,10 +395,8 @@
             this.Controls.Add(this.DerbiGosterBtn);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1Arama);
-            this.Controls.Add(this.BiletSatınAl);
             this.Controls.Add(this.BiletSayisitextBox1);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.BiletSilBtn);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.macIDcomboBox1);
             this.Controls.Add(this.button1);
@@ -433,10 +433,8 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox macIDcomboBox1;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button BiletSilBtn;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox BiletSayisitextBox1;
-        private System.Windows.Forms.Button BiletSatınAl;
         private System.Windows.Forms.TextBox textBox1Arama;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button DerbiGosterBtn;
@@ -454,5 +452,7 @@
         private System.Windows.Forms.TextBox BakiyeYukletextBox;
         private System.Windows.Forms.Label tanimlananbakiyelabel;
         private System.Windows.Forms.Label mevcutbakiyelabel;
+        private System.Windows.Forms.Button BiletIadebutton;
+        private System.Windows.Forms.Button BiletSatınAl;
     }
 }
