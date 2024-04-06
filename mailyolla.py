@@ -3,8 +3,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 # Gmail hesabı bilgileri
-gmail_user = "eraydikyologlu4@gmail.com"  # Gmail adresinizi buraya girin
-gmail_password = "vfrj jyqc iddl zspq"  # Gmail parolanızı buraya girin
+gmail_user = "mail adresini gir"  # Gmail adresinizi buraya girin
+gmail_password = "kendi gmail uygulama sifreni gir"  # Gmail parolanızı buraya girin
 
 # Konu ve mesaj içeriği
 subject = "Staj"
